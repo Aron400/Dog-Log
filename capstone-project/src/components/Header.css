@@ -1,0 +1,32 @@
+@import url("https://fonts.googleapis.com/css2?family=Annie+Use+Your+Telescope&display=swap");
+
+.logo {
+  height: 50px;
+  border-radius: 30px;
+  background: white;
+}
+
+.dog-log {
+  width: 500px;
+  margin: 0 auto;
+  text-align: center;
+  font-family: "Annie Use Your Telescope";
+}
+
+/* .login {
+  display: flex;
+  align-items: center;
+  margin-right: 24px;
+  border-radius: 4px;
+  background: white;
+  padding: 10px 22px;
+  color: #060b26;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  &:hover {
+    transition: all 0.2s ease-in-out;
+    background: blue;
+    color: orange;
+  }
+} */
