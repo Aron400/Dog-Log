@@ -21,10 +21,11 @@ function AddFeedings(props) {
             
             setDog("");
             setUser("");
-      }, [setDate]);
+      }, [date]);
 
     const addData = (e) => {
         e.preventDefault();
+        console.log()
         if (dog ==='' || user ==='') {
             alert('All fields mandatory');
             return;
@@ -51,14 +52,18 @@ function AddFeedings(props) {
                         type='text'
                         name='dog'
                         
-                        onChange={(e) => setDog(e.target.value)}         
+                        onChange={(e) => {
+                            setDog(e.target.value)
+                        }}         
                         /><br />
                     <label>User:</label>
                     <input 
                         type='text'
                         name='user'
                         
-                        onChange={(e) => setUser(e.target.value)}          
+                        onChange={(e) => {
+                            setUser(e.target.value)
+                        }}          
                         /><br />
                     <button onClick={addData}>Add Feeding</button>
                     </div>

@@ -23,7 +23,10 @@ class AddFeeding extends React.Component {
             dog: this.state.dog,
             user: this.state.user,
             date: this.state.date
-            })
+            },
+            console.log('hi')
+            )
+            
             .then((res) => {
                 console.log("Server response: ", res);
             })
