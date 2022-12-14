@@ -15,14 +15,17 @@ class AddFeeding extends React.Component {
             return;
         }
         const body = { data: this.state}
+        console.log(body)
         let date = new Date(); 
         let displayDate = date.toLocaleString()
         console.log(date)               
         this.setState({date: displayDate.toString()}, () => {
-            Axios.post('http://localhost:3001/feeding', body, {
-            dog: this.state.dog,
-            user: this.state.user,
-            date: this.state.date
+            console.log(this.state)
+            
+            Axios.post('http://localhost:3001/feeding', {
+                dog: this.state.dog,
+                user: this.state.user,
+                date: this.state.date
             },
             console.log('hi')
             )

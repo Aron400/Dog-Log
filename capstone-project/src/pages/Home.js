@@ -11,7 +11,15 @@ function Home() {
   const findLastVet = () => {
     //get most recent Vet visit from database
   }
+
+  // const [user, setUser] = useState([]);
+  // console
   
+  // Axios.post('http://localhost:3001/addUser', {
+  //               user: user
+  //           },
+  //           console.log('hi')
+  //           )
   return (
     <div className='home'>
       <h1>Home</h1>
