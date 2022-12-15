@@ -1,26 +1,26 @@
 import React from "react";
-// import * as FaIcons from 'react-icons/fa';
+import * as FaIcons from 'react-icons/fa';
 import * as AiIcons from "react-icons/ai";
-// import * as IoIcons from 'react-icons/io';
+import * as GiIcons from 'react-icons/gi';
 
 export const SideNavbarData = [
 
     {
         title: 'Feeding',
         path: '/feeding',
-        icon: <AiIcons.AiFillHome />,
+        icon: <GiIcons.GiDogBowl />,
         cName: 'nav-text'
     },
     {
         title: 'Walks',
         path: '/walks',
-        icon: <AiIcons.AiFillHome />,
+        icon: <FaIcons.FaWalking />,
         cName: 'nav-text'
     },
     {
         title: 'Medical',
         path: '/medical',
-        icon: <AiIcons.AiFillHome />,
+        icon: <FaIcons.FaBookMedical />,
         cName: 'nav-text'
     },
     {
