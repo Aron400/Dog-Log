@@ -25,7 +25,6 @@ class AddFeeding extends React.Component {
     render() {
         return (
             <div className='feeding'>
-                    <h1>Feeding</h1>
                 <form className='feeding-form' onSubmit={this.add}>
                     <h3>Add Walk</h3>
                     <div className='field'>

@@ -1,6 +1,6 @@
 import "./App.css";
 import Header from "./components/Header";
-import SideNavbar from "./components/side-navbar";
+// import SideNavbar from "./components/side-navbar";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";
 import Feed from "./pages/Feeding";
@@ -14,7 +14,7 @@ function App() {
 		<div className="app">
 			<Router>
 				<Header />
-				<SideNavbar />
+				{/* <SideNavbar /> */}
 				<Routes>
 					<Route path="/" exact element={<Home />} />
 					<Route path="/login" element={<Login />} />

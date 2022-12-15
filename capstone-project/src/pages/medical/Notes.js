@@ -1,4 +1,5 @@
 import { useState } from "react";
+import "./medical.css";
 
 const Notes = () => {
   const [notes, setNotes] = useState([]);
