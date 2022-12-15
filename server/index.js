@@ -116,6 +116,18 @@ app.post("/addDog", (req, res) => {
 		}
 	);
 })
+app.get("/dogs", (req, res) => {
+	db.query(
+		"SELECT * FROM dogs",
+		(err, result) => {
+			if (err) {
+				console.log(err);
+			} else {
+				res.send(result);
+			}
+		}
+	);
+})
 
 app.post("/addUser", (req, res) => {
 	const name = req.body.name;
@@ -128,6 +140,18 @@ app.post("/addUser", (req, res) => {
 				console.log(err);
 			} else {
 				res.send("User Inserted");
+			}
+		}
+	);
+})
+app.get("/users", (req, res) => {
+	db.query(
+		"SELECT * FROM users",
+		(err, result) => {
+			if (err) {
+				console.log(err);
+			} else {
+				res.send(result);
 			}
 		}
 	);
