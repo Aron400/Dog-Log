@@ -38,8 +38,8 @@ app.use(express.json());
 const db = mysql.createConnection({
 	user: "root",
 	host: "localhost",
-	password: "12345",
-	database: "dogApp",
+	password: "root1",
+	database: "doglog",
 });
 
 app.post("/create", (req, res) => {
@@ -52,7 +52,7 @@ app.post("/create", (req, res) => {
 			console.log(err);
 		}
 		db.query(
-			"INSERT INTO UserLogin (email, username, password) VALUES (?,?,?)",
+			"INSERT INTO userlogin (email, username, password) VALUES (?,?,?)",
 			[email, username, hash],
 			(err, result) => {
 				if (err) {
@@ -77,7 +77,7 @@ app.post("/login", (req, res) => {
 	const password = req.body.password;
 
 	db.query(
-		"SELECT * FROM UserLogin WHERE username = ?",
+		"SELECT * FROM userlogin WHERE username = ?",
 		username,
 		(err, result) => {
 			if (err) {
@@ -100,6 +100,112 @@ app.post("/login", (req, res) => {
 		}
 	);
 });
+
+app.post("/addDog", (req, res) => {
+	const name = req.body.name;
+
+	db.query(
+		"INSERT INTO dogs (name) VALUES (?)",
+		[name],
+		(err, result) => {
+			if (err) {
+				console.log(err);
+			} else {
+				res.send("Dog Inserted");
+			}
+		}
+	);
+})
+app.get("/dogs", (req, res) => {
+	db.query(
+		"SELECT * FROM dogs",
+		(err, result) => {
+			if (err) {
+				console.log(err);
+			} else {
+				res.send(result);
+			}
+		}
+	);
+})
+
+app.post("/addUser", (req, res) => {
+	const name = req.body.name;
+
+	db.query(
+		"INSERT INTO users (name) VALUES (?)",
+		[name],
+		(err, result) => {
+			if (err) {
+				console.log(err);
+			} else {
+				res.send("User Inserted");
+			}
+		}
+	);
+})
+app.get("/users", (req, res) => {
+	db.query(
+		"SELECT * FROM users",
+		(err, result) => {
+			if (err) {
+				console.log(err);
+			} else {
+				res.send(result);
+			}
+		}
+	);
+})
+
+app.post("/feeding", (req, res) => {
+	const dog = req.body.dog;
+	const user = req.body.user;
+	const date = req.body.date
+
+	db.query(
+		"INSERT INTO feedings (dog, user, date) VALUES (?,?,?)",
+		[dog, user, date],
+		(err, result) => {
+			if (err) {
+				console.log(err);
+			} else {
+				res.send("Values Inserted");
+			}
+		}
+	);
+})
+
+app.post("/walks", (req, res) => {
+	const dog = req.body.dog;
+	const user = req.body.user;
+	const date = req.body.date
+
+	db.query(
+		"INSERT INTO walks (dog, user, date) VALUES (?,?,?)",
+		[dog, user, date],
+		(err, result) => {
+			if (err) {
+				console.log(err);
+			} else {
+				res.send("Values Inserted");
+			}
+		}
+	);
+})
+
+app.post("/lastFeeding", (req, res) => {
+	db.query(
+		"SELECT * FROM feedings",
+		
+		(err, result) => {
+			if (err) {
+				console.log(err);
+			} else {
+				res.send(result);
+			}
+		}
+	);
+})
 
 app.listen(3001, () => {
 	console.log("yay");

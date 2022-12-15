@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import Axios from 'axios';
 
 class AddWalk extends React.Component {
     state = {
@@ -17,6 +18,21 @@ class AddWalk extends React.Component {
         let displayDate = date.toLocaleString()
         console.log(date)               
         this.setState({date: displayDate.toString()}, () => {
+            
+            Axios.post('http://localhost:3001/walks', {
+                dog: this.state.dog,
+                user: this.state.user,
+                date: this.state.date
+            },
+            console.log('hi')
+            )
+            
+            .then((res) => {
+                console.log("Server response: ", res);
+            })
+            .catch((err) => {
+                console.log("Server respondend with error: ", err);
+            })
             this.props.addWalkHandler(this.state);
             this.setState({ dog: '', user: ''});
         }) 
