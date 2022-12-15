@@ -4,7 +4,6 @@ import * as AiIcons from "react-icons/ai";
 import * as GiIcons from 'react-icons/gi';
 
 export const SideNavbarData = [
-
     {
         title: 'Feeding',
         path: '/feeding',
@@ -23,10 +22,5 @@ export const SideNavbarData = [
         icon: <FaIcons.FaBookMedical />,
         cName: 'nav-text'
     },
-    {
-        title: 'Away',
-        path: '/away',
-        icon: <AiIcons.AiFillHome />,
-        cName: 'nav-text'
-    },
 ]
+

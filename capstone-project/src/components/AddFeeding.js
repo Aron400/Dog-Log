@@ -50,6 +50,7 @@ class AddFeeding extends React.Component {
             <div className='feeding'>
                     <h1>Feeding</h1>
                 <form className='feeding-form' >
+
                     <h3>Add Walk</h3>
                     <div className='field'>
                     <label>Dog:</label>

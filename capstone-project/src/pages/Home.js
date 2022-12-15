@@ -74,8 +74,9 @@ function Home() {
   }
 
   return (
-    <div className='home'>
+    <>
       <h1>Home</h1>
+
       <h3>Add Dog</h3>
         <form>
           <input 
@@ -87,7 +88,7 @@ function Home() {
           />
           <button onClick={addDog}>Add</button>
         </form>
-      <h3>Add User</h3>
+        <h3>Add User</h3>
         <form>
           <input 
             type='text'
@@ -98,6 +99,7 @@ function Home() {
           />
           <button onClick={addUser}>Add</button>
         </form>
+
       <div className="users">
         <button onClick={getUsers}>Show Users</button>
         
@@ -114,6 +116,7 @@ function Home() {
       </div>
         
     </div>
+
   );
 }
 
