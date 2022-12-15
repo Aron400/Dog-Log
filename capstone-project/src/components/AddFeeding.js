@@ -5,7 +5,9 @@ class AddFeeding extends React.Component {
     state = {
         dog: '',
         user: '',
-        date: ''
+        date: '',
+        dogList: [],
+        userList: []
     };
 
     addData = (e) => {

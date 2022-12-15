@@ -98,7 +98,7 @@ function Home() {
           />
           <button onClick={addUser}>Add</button>
         </form>
-        <div className="users">
+      <div className="users">
         <button onClick={getUsers}>Show Users</button>
         
         {userList.map((val, key) => {
