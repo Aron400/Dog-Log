@@ -1,23 +1,23 @@
 import React, { useState, Fragment } from "react";
 import { nanoid } from "nanoid";
-import "./vaccineInfo.css";
+import "./medical.css";
 import ReadOnlyRow from "./ReadOnlyRow";
 import EditVaccineRow from "./EditVaccineRow";
 
 const VaccineInfo = () => {
   const [vaccines, setVaccines] = useState([
-    {
-      id: 1,
-      vaccineName: "rabies",
-      givenDate: "10/22/21",
-      expireDate: "10/22/22",
-    },
-    {
-      id: 2,
-      vaccineName: "lepto",
-      givenDate: "10/22/21",
-      expireDate: "10/22/22",
-    },
+    // {
+    //   id: 1,
+    //   vaccineName: "rabies",
+    //   givenDate: "10/22/21",
+    //   expireDate: "10/22/22",
+    // },
+    // {
+    //   id: 2,
+    //   vaccineName: "lepto",
+    //   givenDate: "10/22/21",
+    //   expireDate: "10/22/22",
+    // },
   ]);
   const [addFormData, setAddFormData] = useState({
     vaccineName: "",

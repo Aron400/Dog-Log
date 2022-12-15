@@ -25,7 +25,6 @@ class AddWalk extends React.Component {
     render() {
         return (
             <div className='walk'>
-                    <h1>Walk</h1>
                 <form className='walk-form' onSubmit={this.add}>
                     <h3>Add Walk</h3>
                     <div className='field'>

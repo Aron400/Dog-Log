@@ -1,6 +1,7 @@
 import React from "react";
 import Notes from "./Notes";
 import VaccineInfo from "./VaccineInfo";
+import "./medical.css";
 
 function Medical() {
   return (

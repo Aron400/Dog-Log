@@ -1,0 +1,20 @@
+.login,
+.home,
+.walk, .walkHistory {
+  flex-direction: column;
+  width: 500px;
+  margin-top: 50px;
+  margin-left: auto;
+  margin-right: auto;
+  background: white;
+  border-radius: 10px;
+  border: 1px solid #7a8796;
+  padding: 10px;
+  box-shadow: rgba(0, 0, 0, 0.56) 0px 22px 70px 4px;
+}
+
+h1 {
+  background-color: #c97757;
+  opacity: 0.7;
+  text-align: center;
+}
