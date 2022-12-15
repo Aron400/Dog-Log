@@ -18,7 +18,7 @@ class AddFeeding extends React.Component {
         console.log(body)
         let date = new Date(); 
         let displayDate = date.toLocaleString()
-        console.log(date)               
+
         this.setState({date: displayDate.toString()}, () => {
             console.log(this.state)
             
@@ -29,7 +29,6 @@ class AddFeeding extends React.Component {
             },
             console.log('hi')
             )
-            
             .then((res) => {
                 console.log("Server response: ", res);
             })
@@ -41,25 +40,9 @@ class AddFeeding extends React.Component {
             
             this.setState({ dog: '', user: ''});
         })
-        
-        
     }
    
-    // add = (e) => {
-    //     e.preventDefault();
-    //     if (this.state.dog ==='' || this.state.user ==='') {
-    //         alert('All fields mandatory');
-    //         return;
-    //     }
-    //     let date = new Date(); 
-    //     let displayDate = date.toLocaleString()
-    //     console.log(date)               
-    //     this.setState({date: displayDate.toString()}, () => {
-    //         this.props.addFeedingHandler(this.state);
-    //         this.setState({ dog: '', user: ''});
-    //     }) 
-    // }
-    
+   
     render() {
         return (
             <div className='feeding'>

@@ -101,6 +101,38 @@ app.post("/login", (req, res) => {
 	);
 });
 
+app.post("/addDog", (req, res) => {
+	const name = req.body.name;
+
+	db.query(
+		"INSERT INTO dogs (name) VALUES (?)",
+		[name],
+		(err, result) => {
+			if (err) {
+				console.log(err);
+			} else {
+				res.send("Dog Inserted");
+			}
+		}
+	);
+})
+
+app.post("/addUser", (req, res) => {
+	const name = req.body.name;
+
+	db.query(
+		"INSERT INTO users (name) VALUES (?)",
+		[name],
+		(err, result) => {
+			if (err) {
+				console.log(err);
+			} else {
+				res.send("User Inserted");
+			}
+		}
+	);
+})
+
 app.post("/feeding", (req, res) => {
 	const dog = req.body.dog;
 	const user = req.body.user;
@@ -137,17 +169,15 @@ app.post("/walks", (req, res) => {
 	);
 })
 
-app.post("/addUser", (req, res) => {
-	const user = req.body.user;
-
+app.post("/lastFeeding", (req, res) => {
 	db.query(
-		"INSERT INTO users (user) VALUES (?)",
-		[user],
+		"SELECT * FROM feedings",
+		
 		(err, result) => {
 			if (err) {
 				console.log(err);
 			} else {
-				res.send("Values Inserted");
+				res.send(result);
 			}
 		}
 	);
