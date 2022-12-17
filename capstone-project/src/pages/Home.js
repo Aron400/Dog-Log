@@ -1,5 +1,6 @@
 import  Axios from "axios";
 import React, {useState, useEffect} from "react";
+import "./pages.css";
 
 function Home() {
   const [dog, setDog] = useState('');
@@ -7,12 +8,6 @@ function Home() {
   const [dogList, setDogList] = useState([]);
   const [userList, setUserList] = useState([]);
 
-  // const [lastFeeding, setLastFeed] = useState([]);
-  // const [lastWalk, setLastWalk] = useState([]);
-  // const [lastVet, setLastVet] = useState([]);
-  // useEffect(() => {
-  //   findLastFeed
-  // }, []);
   const addDog = (e) => {
     e.preventDefault();
         if (dog ==='') {
@@ -74,7 +69,7 @@ function Home() {
   }
 
   return (
-    <>
+    <div className="home">
       <h1>Home</h1>
 
       <h3>Add Dog</h3>
@@ -104,19 +99,25 @@ function Home() {
         <button onClick={getUsers}>Show Users</button>
         
         {userList.map((val, key) => {
-          return <div className="user">{val.name}</div>
+          return <h3>{val.name}</h3>
         })}
       </div>
       <div className="dogs">
         <button onClick={getDogs}>Show Dogs</button>
         
         {dogList.map((val, key) => {
-          return <div>{val.name}</div>
+          return <div className="dog-card">
+            <h3>{val.name}</h3>
+            <div>lastFeeding {val.date}</div>
+            <div>lastWalk</div>
+            <div>lastMed</div>
+            </div>
+            
         })}
       </div>
         
     </div>
-
+    
   );
 }
 
