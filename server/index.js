@@ -38,8 +38,8 @@ app.use(express.json());
 const db = mysql.createConnection({
 	user: "root",
 	host: "localhost",
-	password: "root1",
-	database: "doglog",
+	password: "12345",
+	database: "dogApp",
 });
 
 app.post("/create", (req, res) => {
@@ -52,7 +52,7 @@ app.post("/create", (req, res) => {
 			console.log(err);
 		}
 		db.query(
-			"INSERT INTO userlogin (email, username, password) VALUES (?,?,?)",
+			"INSERT INTO userLogin (email, username, password) VALUES (?,?,?)",
 			[email, username, hash],
 			(err, result) => {
 				if (err) {
@@ -76,7 +76,7 @@ app.post("/login", (req, res) => {
 	const email = req.body.email;
 	const password = req.body.password;
 
-	db.query("SELECT * FROM userlogin WHERE email = ?", email, (err, result) => {
+	db.query("SELECT * FROM UserLogin WHERE email = ?", email, (err, result) => {
 		if (err) {
 			res.send({ err: err });
 		}
