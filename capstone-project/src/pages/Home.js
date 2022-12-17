@@ -69,7 +69,7 @@ function Home() {
     getUsers();
     getDogs();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  },[]);
+  },[addDog, addUser]);
   const removeUser = (id) => {
     Axios.delete(`http://localhost:3001/delete/${id}`)
   }
