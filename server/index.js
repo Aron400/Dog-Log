@@ -156,7 +156,7 @@ app.get("/users", (req, res) => {
 				res.send(result);
 			}
 		}
-	});
+	);
 });
 
 app.post("/feeding", (req, res) => {
