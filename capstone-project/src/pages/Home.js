@@ -1,5 +1,6 @@
 import  Axios from "axios";
 import React, {useState, useEffect} from "react";
+import "./pages.css";
 
 function Home() {
   const [dog, setDog] = useState('');
@@ -7,12 +8,6 @@ function Home() {
   const [dogList, setDogList] = useState([]);
   const [userList, setUserList] = useState([]);
 
-  // const [lastFeeding, setLastFeed] = useState([]);
-  // const [lastWalk, setLastWalk] = useState([]);
-  // const [lastVet, setLastVet] = useState([]);
-  // useEffect(() => {
-  //   findLastFeed
-  // }, []);
   const addDog = (e) => {
     e.preventDefault();
         if (dog ==='') {
@@ -50,8 +45,7 @@ function Home() {
               })
             setUser('');
   }
-  const getDogs = (e) => {
-    e.preventDefault();
+  const getDogs = () => {
     Axios.get('http://localhost:3001/dogs')
       .then((res) => {
           console.log("Server response: ", res);
@@ -61,8 +55,7 @@ function Home() {
           console.log("Server respondend with error: ", err);
       })
   }
-  const getUsers = (e) => {
-    e.preventDefault();
+  const getUsers = () => {
     Axios.get('http://localhost:3001/users')
       .then((res) => {
           console.log("Server response: ", res);
@@ -72,9 +65,14 @@ function Home() {
           console.log("Server respondend with error: ", err);
       })
   }
+  useEffect(() => {
+    getUsers();
+    getDogs();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
-    <>
+    <div className="home">
       <h1>Home</h1>
 
       <h3>Add Dog</h3>
@@ -101,22 +99,32 @@ function Home() {
         </form>
 
       <div className="users">
-        <button onClick={getUsers}>Show Users</button>
+        <h3>Users</h3>
         
         {userList.map((val, key) => {
-          return <div className="user">{val.name}</div>
+          return <div className="user-card">
+            <h4>{val.name}</h4>
+            <button>remove</button>
+            </div>
         })}
       </div>
       <div className="dogs">
-        <button onClick={getDogs}>Show Dogs</button>
+        <h3>Dogs</h3>
         
         {dogList.map((val, key) => {
-          return <div>{val.name}</div>
+          return <div className="dog-card">
+            <h4>{val.name}</h4>
+            <div>lastFeeding: user: {val.feedingUser}, date: {val.feedingDate}</div>
+            <div>lastWalk: user: {val.walkUser} - date: {val.walkDate}</div>
+            <div>lastMed</div>
+            <button>remove</button>
+            </div>
+            
         })}
       </div>
         
     </div>
-
+    
   );
 }
 
