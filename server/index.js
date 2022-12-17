@@ -13,10 +13,17 @@ const saltRounds = 10;
 app.use(
 	cors({
 		origin: ["http://localhost:3000"],
-		methods: ["GET", "POST"],
+		methods: ["GET", "POST", "DELETE"],
 		credentials: true,
 	})
 );
+// app.use(function (req, res, next) {
+// 	res.header("Access-Control-Allow-Origin", "*");
+// 	res.header("Access-Control-Allow-Methods", "GET, PUT, POST, DELETE");
+// 	res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
+// 	next();
+//   });
+
 
 app.use(cookieParser());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -34,7 +41,6 @@ app.use(
 );
 
 app.use(express.json());
-
 const db = mysql.createConnection({
 	user: "root",
 	host: "localhost",
@@ -80,7 +86,6 @@ app.post("/login", (req, res) => {
 		if (err) {
 			res.send({ err: err });
 		}
-
 		if (result.length > 0) {
 			bcrypt.compare(password, result[0].password, (error, response) => {
 				if (response) {
@@ -109,13 +114,15 @@ app.post("/addDog", (req, res) => {
 	});
 });
 app.get("/dogs", (req, res) => {
+	const userID = req.session.user.id; 
 	db.query(
 		`SELECT d.dogsID, d.name, 
 			(SELECT feedingUser from feedings as f WHERE f.dogsID = d.dogsID ORDER BY feedingDate DESC LIMIT 1) as feedingUser,
 			(SELECT feedingDate from feedings as f WHERE f.dogsID = d.dogsID ORDER BY feedingDate DESC LIMIT 1) as feedingDate,
 			(SELECT walkUser from walks as w WHERE w.dogsID = d.dogsID ORDER BY walkDate DESC LIMIT 1) as walkUser,
 			(SELECT walkDate from walks as w WHERE w.dogsID = d.dogsID ORDER BY walkDate DESC LIMIT 1) as walkDate
-		FROM dogs as d`,
+		FROM dogs as d
+		WHERE d.userloginID = ${userID}`,
 		(err, result) => {
 			if (err) {
 				console.log(err);
@@ -138,11 +145,16 @@ app.post("/addUser", (req, res) => {
 	});
 });
 app.get("/users", (req, res) => {
-	db.query("SELECT * FROM users", (err, result) => {
-		if (err) {
-			console.log(err);
-		} else {
-			res.send(result);
+	const userID = req.session.user.id;
+	db.query(
+		`SELECT * FROM users
+		WHERE userloginID = ${userID}`,
+		(err, result) => {
+			if (err) {
+				console.log(err);
+			} else {
+				res.send(result);
+			}
 		}
 	});
 });
@@ -196,6 +208,18 @@ app.post("/lastFeeding", (req, res) => {
 		}
 	);
 });
+
+app.delete('/delete/:id', (req, res) => {
+	const id = req.params.id;
+	db.query(`DELETE FROM users WHERE usersID = ${id}`, (err, result) => {
+		if (err) {
+		  console.log(err);
+		  res.end();
+		} else {
+		  res.send(result);
+		}
+	  });
+})
 
 app.listen(3001, () => {
 	console.log("yay");

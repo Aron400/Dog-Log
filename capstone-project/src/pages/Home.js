@@ -69,7 +69,13 @@ function Home() {
     getUsers();
     getDogs();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  },[]);
+  const removeUser = (id) => {
+    Axios.delete(`http://localhost:3001/delete/${id}`)
+  }
+  const removeDog = () => {
+
+  }
 
   return (
     <div className="home">
@@ -104,7 +110,7 @@ function Home() {
         {userList.map((val, key) => {
           return <div className="user-card">
             <h4>{val.name}</h4>
-            <button>remove</button>
+            <button onClick={() => {removeUser(val.usersID)}}>remove</button>
             </div>
         })}
       </div>
