@@ -8,6 +8,7 @@ import Walk from "./pages/Walks";
 import Medical from "./pages/medical/Medical";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
+import PrivateRoutes from "./components/PrivateRoutes";
 
 function App() {
 	return (
@@ -16,12 +17,14 @@ function App() {
 				<Header />
 				{/* <SideNavbar /> */}
 				<Routes>
-					<Route path="/" exact element={<Home />} />
-					<Route path="/login" element={<Login />} />
-					<Route path="/register" element={<Register />} />
-					<Route path="/feeding" element={<Feed />} />
-					<Route path="/walks" element={<Walk />} />
-					<Route path="/medical" element={<Medical />} />
+					<Route element={<PrivateRoutes />}>
+						<Route path="/home" exact element={<Home />} />
+						<Route path="/register" element={<Register />} />
+						<Route path="/feeding" element={<Feed />} />
+						<Route path="/walks" element={<Walk />} />
+						<Route path="/medical" element={<Medical />} />
+					</Route>
+					<Route element={<Login />} path="/" />
 				</Routes>
 			</Router>
 		</div>
