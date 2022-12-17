@@ -79,49 +79,40 @@ app.get("/login", (req, res) => {
 	}
 });
 app.post("/login", (req, res) => {
-	const username = req.body.username;
+	const email = req.body.email;
 	const password = req.body.password;
 
-	db.query(
-		"SELECT * FROM userlogin WHERE username = ?",
-		username,
-		(err, result) => {
-			if (err) {
-				res.send({ err: err });
-			}
-
-			if (result.length > 0) {
-				bcrypt.compare(password, result[0].password, (error, response) => {
-					if (response) {
-						req.session.user = result; // to do
-						console.log(req.session.user);
-						res.send(result);
-					} else {
-						res.send({ message: "Username doesn't exist" });
-					}
-				});
-			} else {
-				res.send({ message: "Wrong username or password combination." });
-			}
+	db.query("SELECT * FROM userlogin WHERE email = ?", email, (err, result) => {
+		if (err) {
+			res.send({ err: err });
 		}
-	);
+		if (result.length > 0) {
+			bcrypt.compare(password, result[0].password, (error, response) => {
+				if (response) {
+					req.session.user = result;
+					console.log(req.session.user);
+					res.send(result);
+				} else {
+					res.send({ message: "Email doesn't exist" });
+				}
+			});
+		} else {
+			res.send({ message: "Wrong email or password combination." });
+		}
+	});
 });
 
 app.post("/addDog", (req, res) => {
 	const name = req.body.name;
 
-	db.query(
-		"INSERT INTO dogs (name) VALUES (?)",
-		[name],
-		(err, result) => {
-			if (err) {
-				console.log(err);
-			} else {
-				res.send("Dog Inserted");
-			}
+	db.query("INSERT INTO dogs (name) VALUES (?)", [name], (err, result) => {
+		if (err) {
+			console.log(err);
+		} else {
+			res.send("Dog Inserted");
 		}
-	);
-})
+	});
+});
 app.get("/dogs", (req, res) => {
 	const userID = req.session.user.id; 
 	db.query(
@@ -140,23 +131,19 @@ app.get("/dogs", (req, res) => {
 			}
 		}
 	);
-})
+});
 
 app.post("/addUser", (req, res) => {
 	const name = req.body.name;
 
-	db.query(
-		"INSERT INTO users (name) VALUES (?)",
-		[name],
-		(err, result) => {
-			if (err) {
-				console.log(err);
-			} else {
-				res.send("User Inserted");
-			}
+	db.query("INSERT INTO users (name) VALUES (?)", [name], (err, result) => {
+		if (err) {
+			console.log(err);
+		} else {
+			res.send("User Inserted");
 		}
-	);
-})
+	});
+});
 app.get("/users", (req, res) => {
 	const userID = req.session.user.id;
 	db.query(
@@ -169,13 +156,13 @@ app.get("/users", (req, res) => {
 				res.send(result);
 			}
 		}
-	);
-})
+	});
+});
 
 app.post("/feeding", (req, res) => {
 	const dog = req.body.dog;
 	const user = req.body.user;
-	const date = req.body.date
+	const date = req.body.date;
 
 	db.query(
 		"INSERT INTO feedings (dog, user, date) VALUES (?,?,?)",
@@ -188,12 +175,12 @@ app.post("/feeding", (req, res) => {
 			}
 		}
 	);
-})
+});
 
 app.post("/walks", (req, res) => {
 	const dog = req.body.dog;
 	const user = req.body.user;
-	const date = req.body.date
+	const date = req.body.date;
 
 	db.query(
 		"INSERT INTO walks (dog, user, date) VALUES (?,?,?)",
@@ -206,12 +193,12 @@ app.post("/walks", (req, res) => {
 			}
 		}
 	);
-})
+});
 
 app.post("/lastFeeding", (req, res) => {
 	db.query(
 		"SELECT * FROM feedings",
-		
+
 		(err, result) => {
 			if (err) {
 				console.log(err);
@@ -220,7 +207,7 @@ app.post("/lastFeeding", (req, res) => {
 			}
 		}
 	);
-})
+});
 
 app.delete('/delete/:id', (req, res) => {
 	const id = req.params.id;
