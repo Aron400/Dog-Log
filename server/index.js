@@ -119,9 +119,11 @@ app.post("/addDog", (req, res) => {
 app.get("/dogs", (req, res) => {
 	db.query(
 		`SELECT d.dogsID, d.name, 
-		(SELECT user from feedings as f WHERE f.dogsID = d.dogsID ORDER BY date DESC LIMIT 1) as user,
-		(SELECT date from feedings as f WHERE f.dogsID = d.dogsID ORDER BY date DESC LIMIT 1) as date
-	FROM dogs as d`,
+			(SELECT feedingUser from feedings as f WHERE f.dogsID = d.dogsID ORDER BY feedingDate DESC LIMIT 1) as feedingUser,
+			(SELECT feedingDate from feedings as f WHERE f.dogsID = d.dogsID ORDER BY feedingDate DESC LIMIT 1) as feedingDate,
+			(SELECT walkUser from walks as w WHERE w.dogsID = d.dogsID ORDER BY walkDate DESC LIMIT 1) as walkUser,
+			(SELECT walkDate from walks as w WHERE w.dogsID = d.dogsID ORDER BY walkDate DESC LIMIT 1) as walkDate
+		FROM dogs as d`,
 		(err, result) => {
 			if (err) {
 				console.log(err);

@@ -45,8 +45,7 @@ function Home() {
               })
             setUser('');
   }
-  const getDogs = (e) => {
-    e.preventDefault();
+  const getDogs = () => {
     Axios.get('http://localhost:3001/dogs')
       .then((res) => {
           console.log("Server response: ", res);
@@ -56,8 +55,7 @@ function Home() {
           console.log("Server respondend with error: ", err);
       })
   }
-  const getUsers = (e) => {
-    e.preventDefault();
+  const getUsers = () => {
     Axios.get('http://localhost:3001/users')
       .then((res) => {
           console.log("Server response: ", res);
@@ -67,6 +65,11 @@ function Home() {
           console.log("Server respondend with error: ", err);
       })
   }
+  useEffect(() => {
+    getUsers();
+    getDogs();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <div className="home">
@@ -96,21 +99,25 @@ function Home() {
         </form>
 
       <div className="users">
-        <button onClick={getUsers}>Show Users</button>
+        <h3>Users</h3>
         
         {userList.map((val, key) => {
-          return <h3>{val.name}</h3>
+          return <div className="user-card">
+            <h4>{val.name}</h4>
+            <button>remove</button>
+            </div>
         })}
       </div>
       <div className="dogs">
-        <button onClick={getDogs}>Show Dogs</button>
+        <h3>Dogs</h3>
         
         {dogList.map((val, key) => {
           return <div className="dog-card">
-            <h3>{val.name}</h3>
-            <div>lastFeeding {val.date}</div>
-            <div>lastWalk</div>
+            <h4>{val.name}</h4>
+            <div>lastFeeding: user: {val.feedingUser}, date: {val.feedingDate}</div>
+            <div>lastWalk: user: {val.walkUser} - date: {val.walkDate}</div>
             <div>lastMed</div>
+            <button>remove</button>
             </div>
             
         })}
