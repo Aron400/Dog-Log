@@ -158,8 +158,10 @@ app.post("/addUser", (req, res) => {
 	);
 })
 app.get("/users", (req, res) => {
+	const userID = req.session.user.id;
 	db.query(
-		"SELECT * FROM users",
+		`SELECT * FROM users
+		WHERE userloginID = ${userID}`,
 		(err, result) => {
 			if (err) {
 				console.log(err);
