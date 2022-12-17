@@ -1,62 +1,67 @@
 import { useEffect, useState } from "react";
 import Axios from "axios";
-import "./pages.css";
+import { useNavigate } from "react-router-dom";
 
 function Login() {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
+	const [email, setEmail] = useState("");
+	const [password, setPassword] = useState("");
+	const [loginStatus, setLoginStatus] = useState("");
+	const navigate = useNavigate();
 
-  const [loginStatus, setLoginStatus] = useState("");
+	const navigateToHome = () => {
+		// 👇️ navigate to home
+		navigate("/home");
+	};
 
-  Axios.defaults.withCredentials = true;
+	Axios.defaults.withCredentials = true;
 
-  const login = () => {
-    Axios.post("http://localhost:3001/login", {
-      username: username,
-      password: password,
-    }).then((response) => {
-      if (response.data.message) {
-        setLoginStatus(response.data.message);
-      } else {
-        setLoginStatus(response.data[0].username);
-      }
-    });
-  };
-  useEffect(() => {
-    Axios.get("http://localhost:3001/login").then((response) => {
-      if (response.data.loggedInd == true)
-        setLoginStatus(response.data.user[0].username);
-    });
-  }, []);
+	const login = () => {
+		Axios.post("http://localhost:3001/login", {
+			email: email,
+			password: password,
+		}).then((response) => {
+			if (response.data.message) {
+				setLoginStatus(response.data.message);
+			} else {
+				setLoginStatus(response.data[0].email);
+				localStorage.setItem("token", response.data.email);
+				navigateToHome();
+			}
+		});
+	};
+	useEffect(() => {
+		Axios.get("http://localhost:3001/login").then((response) => {
+			if (response.data.loggedIn == true)
+				setLoginStatus(response.data.user[0].email);
+		});
+	}, []);
 
-  return (
-    <div className="App">
-      <h1>Login</h1>
-      <div className="login">
-        <label>Username:</label>
-        <input
-          type="text"
-          onChange={(event) => {
-            setUsername(event.target.value);
-          }}
-        />
+	return (
+		<div className="App">
+			<div className="login">
+				<label>Email:</label>
+				<input
+					type="text"
+					onChange={(event) => {
+						setEmail(event.target.value);
+					}}
+				/>
 
-        <label>Password:</label>
-        <input
-          type="text"
-          onChange={(event) => {
-            setPassword(event.target.value);
-          }}
-        />
+				<label>Password:</label>
+				<input
+					type="text"
+					onChange={(event) => {
+						setPassword(event.target.value);
+					}}
+				/>
+			</div>
 
-        <button onClick={login} className="btn btn-primary">
-          Login
-        </button>
-      </div>
-
-      <h1>{loginStatus}</h1>
-    </div>
-  );
+			<button onClick={login} className="btn btn-primary">
+				Login
+			</button>
+			<h1>{loginStatus}</h1>
+		</div>
+	);
 }
 
 export default Login;
