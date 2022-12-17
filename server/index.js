@@ -29,54 +29,54 @@ app.use(cookieParser());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use(
-	session({
-		key: "userId",
-		secret: "subscribe",
-		resave: false,
-		saveUninitialized: false,
-		cookie: {
-			expires: 60 * 60 * 24,
-		},
-	})
+  session({
+    key: "userId",
+    secret: "subscribe",
+    resave: false,
+    saveUninitialized: false,
+    cookie: {
+      expires: 60 * 60 * 24,
+    },
+  })
 );
 
 app.use(express.json());
 const db = mysql.createConnection({
-	user: "root",
-	host: "localhost",
-	password: "root1",
-	database: "doglog",
+  user: "root",
+  host: "localhost",
+  password: "password",
+  database: "sys",
 });
 
 app.post("/create", (req, res) => {
-	const email = req.body.email;
-	const username = req.body.username;
-	const password = req.body.password;
+  const email = req.body.email;
+  const username = req.body.username;
+  const password = req.body.password;
 
-	bcrypt.hash(password, saltRounds, (err, hash) => {
-		if (err) {
-			console.log(err);
-		}
-		db.query(
-			"INSERT INTO userlogin (email, username, password) VALUES (?,?,?)",
-			[email, username, hash],
-			(err, result) => {
-				if (err) {
-					console.log(err);
-				} else {
-					res.send("Values Inserted");
-				}
-			}
-		);
-	});
+  bcrypt.hash(password, saltRounds, (err, hash) => {
+    if (err) {
+      console.log(err);
+    }
+    db.query(
+      "INSERT INTO userlogin (email, username, password) VALUES (?,?,?)",
+      [email, username, hash],
+      (err, result) => {
+        if (err) {
+          console.log(err);
+        } else {
+          res.send("Values Inserted");
+        }
+      }
+    );
+  });
 });
 
 app.get("/login", (req, res) => {
-	if (req.session.user) {
-		res.send({ loggedIn: true, user: req.session.user });
-	} else {
-		res.send({ loggedIn: false });
-	}
+  if (req.session.user) {
+    res.send({ loggedIn: true, user: req.session.user });
+  } else {
+    res.send({ loggedIn: false });
+  }
 });
 app.post("/login", (req, res) => {
 	const email = req.body.email;
@@ -220,7 +220,6 @@ app.delete('/delete/:id', (req, res) => {
 		}
 	  });
 })
-
 app.listen(3001, () => {
-	console.log("yay");
+  console.log("yay");
 });
