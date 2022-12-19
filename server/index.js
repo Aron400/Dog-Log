@@ -44,8 +44,8 @@ app.use(express.json());
 const db = mysql.createConnection({
   user: "root",
   host: "localhost",
-  password: "password",
-  database: "sys",
+  password: "root1",
+  database: "doglog",
 });
 
 app.post("/create", (req, res) => {
@@ -114,15 +114,13 @@ app.post("/addDog", (req, res) => {
 	});
 });
 app.get("/dogs", (req, res) => {
-	const userID = req.session.user.id; 
 	db.query(
 		`SELECT d.dogsID, d.name, 
 			(SELECT feedingUser from feedings as f WHERE f.dogsID = d.dogsID ORDER BY feedingDate DESC LIMIT 1) as feedingUser,
 			(SELECT feedingDate from feedings as f WHERE f.dogsID = d.dogsID ORDER BY feedingDate DESC LIMIT 1) as feedingDate,
 			(SELECT walkUser from walks as w WHERE w.dogsID = d.dogsID ORDER BY walkDate DESC LIMIT 1) as walkUser,
 			(SELECT walkDate from walks as w WHERE w.dogsID = d.dogsID ORDER BY walkDate DESC LIMIT 1) as walkDate
-		FROM dogs as d
-		WHERE d.userloginID = ${userID}`,
+		FROM dogs as d`,
 		(err, result) => {
 			if (err) {
 				console.log(err);
@@ -145,10 +143,8 @@ app.post("/addUser", (req, res) => {
 	});
 });
 app.get("/users", (req, res) => {
-	const userID = req.session.user.id;
 	db.query(
-		`SELECT * FROM users
-		WHERE userloginID = ${userID}`,
+		`SELECT * FROM users`,
 		(err, result) => {
 			if (err) {
 				console.log(err);
@@ -165,7 +161,7 @@ app.post("/feeding", (req, res) => {
 	const date = req.body.date;
 
 	db.query(
-		"INSERT INTO feedings (dog, user, date) VALUES (?,?,?)",
+		"INSERT INTO feedings (dog, feedingUser, feedingDate) VALUES (?,?,?)",
 		[dog, user, date],
 		(err, result) => {
 			if (err) {
@@ -183,7 +179,7 @@ app.post("/walks", (req, res) => {
 	const date = req.body.date;
 
 	db.query(
-		"INSERT INTO walks (dog, user, date) VALUES (?,?,?)",
+		"INSERT INTO walks (dog, walkUser, walkDate) VALUES (?,?,?)",
 		[dog, user, date],
 		(err, result) => {
 			if (err) {
