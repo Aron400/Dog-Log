@@ -173,14 +173,30 @@ app.post("/feeding", (req, res) => {
 	);
 });
 
+app.get("/feedingHistory", (req, res) => {
+	db.query(
+		`SELECT dog, feedingUser, feedingDate FROM feedings`,
+		(err, result) => {
+			if (err) {
+				console.log(err);
+			} else {
+				res.send(result);
+			}
+		}
+	);
+});
+
+
 app.post("/walks", (req, res) => {
 	const dog = req.body.dog;
+	const dogsID = req.body.dogsID;
 	const user = req.body.user;
+	const usersID = req.body.usersID;
 	const date = req.body.date;
 
 	db.query(
-		"INSERT INTO walks (dog, walkUser, walkDate) VALUES (?,?,?)",
-		[dog, user, date],
+		"INSERT INTO walks (dog, dogsID, walkUser, usersID, walkDate) VALUES (?,?,?,?,?)",
+		[dog, dogsID, user, usersID, date],
 		(err, result) => {
 			if (err) {
 				console.log(err);
@@ -205,9 +221,20 @@ app.post("/lastFeeding", (req, res) => {
 	);
 });
 
-app.delete('/delete/:id', (req, res) => {
+app.delete('/deleteUser/:id', (req, res) => {
 	const id = req.params.id;
 	db.query(`DELETE FROM users WHERE usersID = ${id}`, (err, result) => {
+		if (err) {
+		  console.log(err);
+		  res.end();
+		} else {
+		  res.send(result);
+		}
+	  });
+})
+app.delete('/deleteDog/:id', (req, res) => {
+	const id = req.params.id;
+	db.query(`DELETE FROM dogs WHERE dogsID = ${id}`, (err, result) => {
 		if (err) {
 		  console.log(err);
 		  res.end();
