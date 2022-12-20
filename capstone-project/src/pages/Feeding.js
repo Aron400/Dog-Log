@@ -34,7 +34,7 @@ function Feeding() {
         }
         let dateShow = new Date();
         let displayDate = dateShow.toLocaleString();
-        setDate(displayDate.toLocaleString())
+        setDate(displayDate.toString())
             console.log(date)
             Axios.post(
               "http://localhost:3001/feeding",
