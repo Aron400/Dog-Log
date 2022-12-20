@@ -44,8 +44,8 @@ app.use(express.json());
 const db = mysql.createConnection({
   user: "root",
   host: "localhost",
-  password: "password",
-  database: "sys",
+  password: "root1",
+  database: "doglog",
 });
 
 app.post("/create", (req, res) => {
@@ -114,15 +114,13 @@ app.post("/addDog", (req, res) => {
 	});
 });
 app.get("/dogs", (req, res) => {
-	const userID = req.session.user.id; 
 	db.query(
 		`SELECT d.dogsID, d.name, 
 			(SELECT feedingUser from feedings as f WHERE f.dogsID = d.dogsID ORDER BY feedingDate DESC LIMIT 1) as feedingUser,
 			(SELECT feedingDate from feedings as f WHERE f.dogsID = d.dogsID ORDER BY feedingDate DESC LIMIT 1) as feedingDate,
 			(SELECT walkUser from walks as w WHERE w.dogsID = d.dogsID ORDER BY walkDate DESC LIMIT 1) as walkUser,
 			(SELECT walkDate from walks as w WHERE w.dogsID = d.dogsID ORDER BY walkDate DESC LIMIT 1) as walkDate
-		FROM dogs as d
-		WHERE d.userloginID = ${userID}`,
+		FROM dogs as d`,
 		(err, result) => {
 			if (err) {
 				console.log(err);
@@ -145,10 +143,8 @@ app.post("/addUser", (req, res) => {
 	});
 });
 app.get("/users", (req, res) => {
-	const userID = req.session.user.id;
 	db.query(
-		`SELECT * FROM users
-		WHERE userloginID = ${userID}`,
+		`SELECT * FROM users`,
 		(err, result) => {
 			if (err) {
 				console.log(err);
@@ -161,12 +157,14 @@ app.get("/users", (req, res) => {
 
 app.post("/feeding", (req, res) => {
 	const dog = req.body.dog;
+	const dogsID = req.body.dogsID;
 	const user = req.body.user;
+	const usersID = req.body.usersID;
 	const date = req.body.date;
 
 	db.query(
-		"INSERT INTO feedings (dog, user, date) VALUES (?,?,?)",
-		[dog, user, date],
+		"INSERT INTO feedings (dog, dogsID, feedingUser, usersID, feedingDate) VALUES (?,?,?,?,?)",
+		[dog, dogsID, user, usersID, date],
 		(err, result) => {
 			if (err) {
 				console.log(err);
@@ -177,19 +175,54 @@ app.post("/feeding", (req, res) => {
 	);
 });
 
+app.get("/feedingHistory", (req, res) => {
+	db.query(
+		`SELECT dog, feedingUser, feedingDate 
+		FROM feedings
+		ORDER BY feedingsID DESC
+		LIMIT 10`,
+		(err, result) => {
+			if (err) {
+				console.log(err);
+			} else {
+				res.send(result);
+			}
+		}
+	);
+});
+
+
 app.post("/walks", (req, res) => {
 	const dog = req.body.dog;
+	const dogsID = req.body.dogsID;
 	const user = req.body.user;
+	const usersID = req.body.usersID;
 	const date = req.body.date;
 
 	db.query(
-		"INSERT INTO walks (dog, user, date) VALUES (?,?,?)",
-		[dog, user, date],
+		"INSERT INTO walks (dog, dogsID, walkUser, usersID, walkDate) VALUES (?,?,?,?,?)",
+		[dog, dogsID, user, usersID, date],
 		(err, result) => {
 			if (err) {
 				console.log(err);
 			} else {
 				res.send("Values Inserted");
+			}
+		}
+	);
+});
+
+app.get("/walkHistory", (req, res) => {
+	db.query(
+		`SELECT dog, walkUser, walkDate 
+		FROM walks
+		ORDER BY walksID DESC
+		LIMIT 10`,
+		(err, result) => {
+			if (err) {
+				console.log(err);
+			} else {
+				res.send(result);
 			}
 		}
 	);
@@ -209,9 +242,20 @@ app.post("/lastFeeding", (req, res) => {
 	);
 });
 
-app.delete('/delete/:id', (req, res) => {
+app.delete('/deleteUser/:id', (req, res) => {
 	const id = req.params.id;
 	db.query(`DELETE FROM users WHERE usersID = ${id}`, (err, result) => {
+		if (err) {
+		  console.log(err);
+		  res.end();
+		} else {
+		  res.send(result);
+		}
+	  });
+})
+app.delete('/deleteDog/:id', (req, res) => {
+	const id = req.params.id;
+	db.query(`DELETE FROM dogs WHERE dogsID = ${id}`, (err, result) => {
 		if (err) {
 		  console.log(err);
 		  res.end();

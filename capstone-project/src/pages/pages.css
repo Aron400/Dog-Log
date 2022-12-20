@@ -1,8 +1,87 @@
 .login,
 .home,
-.walk, .walkHistory {
+.walks,
+.feeding,
+.information {
   flex-direction: column;
-  width: 500px;
+  width: 650px;
+  margin-top: 50px;
+  margin-left: auto;
+  margin-right: auto;
+  background: white;
+  border-radius: 10px;
+  border: 1px solid #7a8796;
+  padding: 10px;
+  box-shadow: rgba(0, 0, 0, 0.56) 0px 22px 70px 4px;
+}
+label,
+select,
+button {
+  margin: 5px;
+  width: auto;
+}
+.walk-card,
+.feed-card {
+  text-align: left;
+}
+
+.users{
+  flex-direction: row;
+}
+
+form {
+  flex-direction: column;
+  text-align: center;
+  padding-left: 18px;
+}
+form {
+  display: flex;
+  gap: 5px;
+}
+
+form td:last-child {
+  display: flex;
+  justify-content: space-evenly;
+}
+
+form * {
+  font-size: 20px;
+}
+
+button {
+  background-color: #04AA6D;
+  border: 0;
+  color: white;
+  padding: 5px;
+}
+
+h3 {
+  flex-direction: column;
+}
+
+h1 {
+  background-color: #c97757;
+  opacity: 0.7;
+  text-align: center;
+}
+
+h2 {
+  text-align: center;
+}
+
+li {
+  flex-direction: column;
+  padding-top: 8px;
+}
+
+@media (max-width: 500px) {
+.login,
+.home,
+.walks,
+.feeding,
+.information {
+  flex-direction: column;
+  width: 250px;
   margin-top: 50px;
   margin-left: auto;
   margin-right: auto;
@@ -13,8 +92,8 @@
   box-shadow: rgba(0, 0, 0, 0.56) 0px 22px 70px 4px;
 }
 
-h1 {
-  background-color: #c97757;
-  opacity: 0.7;
-  text-align: center;
+img {
+  width: 150px;
+  
+}
 }

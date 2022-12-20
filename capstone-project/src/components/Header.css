@@ -1,6 +1,22 @@
 @import url("https://fonts.googleapis.com/css2?family=Annie+Use+Your+Telescope&display=swap");
 
+
 .logo {
   height: 100px;
   background: white;
+}
+
+.login-button {
+  position: relative;
+  right: 5px;
+  top: 40px;
+  
+}
+
+.side-bar {
+  position: relative;
+  left: 5px;
+  margin-top: 30px;
+  margin-left: 0px;
+  
 }

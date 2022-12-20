@@ -16,33 +16,40 @@ function Register() {
 
 	return (
 		<div className="App">
+			<h1>Register</h1>
 			<div className="information">
-				<label>Email:</label>
-				<input
-					type="text"
-					onChange={(event) => {
-						setEmailReg(event.target.value);
-					}}
-				/>
-				<label>UserName:</label>
-				<input
-					type="text"
-					onChange={(event) => {
-						setUsernameReg(event.target.value);
-					}}
-				/>
-				<label>Password:</label>
-				<input
-					type="text"
-					onChange={(event) => {
-						setPasswordReg(event.target.value);
-					}}
-				/>
-			</div>
+				<form>
+					<h2>Register</h2>
+					<div className='field'>
+					<label>Email:</label>
+					<input
+						type="text"
+						onChange={(event) => {
+							setEmailReg(event.target.value);
+						}}
+					/>
+					<label>UserName:</label>
+					<input
+						type="text"
+						onChange={(event) => {
+							setUsernameReg(event.target.value);
+						}}
+					/>
+					<label>Password:</label>
+					<input
+						type="text"
+						onChange={(event) => {
+							setPasswordReg(event.target.value);
+						}}
+					/>
+				
 
-			<button onClick={addUser} className="btn btn-primary">
-				Register
-			</button>
+					<button onClick={addUser} className="btn btn-primary">
+						Register
+					</button>
+					</div>
+				</form>
+			</div>
 		</div>
 	);
 }

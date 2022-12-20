@@ -7,7 +7,7 @@ const Header = () => {
   return (
     <>
       <Nav>
-        <SideNavbar />
+        <div className="side-bar"><SideNavbar /></div>
         <NavLink to="/">
           <img
             src={require("../images/logoandimage2.png")}
