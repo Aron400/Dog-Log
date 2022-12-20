@@ -23,10 +23,6 @@ class AddWalk extends React.Component {
 
   add = (e) => {
     e.preventDefault();
-    if (this.state.dog === "" || this.state.user === "") {
-      alert("All fields mandatory");
-      return;
-    }
     let date = new Date();
     let displayDate = date.toLocaleString();
     console.log(date);

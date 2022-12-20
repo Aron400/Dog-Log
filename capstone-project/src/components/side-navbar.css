@@ -7,8 +7,9 @@
 }
 
 .menu-bars {
-  margin-left: 2rem;
-  font-size: 2rem;
+  position: relative;
+  margin-left: 20px;
+  font-size: 3rem;
   color: white;
 }
 
