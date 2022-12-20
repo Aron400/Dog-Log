@@ -1,8 +1,11 @@
 import React, { useState, useEffect } from "react";
 import Axios from "axios";
 import "./pages.css";
+
+
+
+
 function Walks() {
-  
   const [walking, setWalking] = useState('');
   const [walkList, setWalkList] = useState([]);
   const [dog, setDog] = useState('');
@@ -19,7 +22,6 @@ function Walks() {
       const users = res.data;
       setUserList(users);
     });
-    console.log(userList)
     Axios.get("http://localhost:3001/dogs").then((res) => {
       const dogs = res.data;
       setDogList(dogs);
@@ -36,7 +38,7 @@ function Walks() {
         let displayDate = date.toLocaleString();
         setDate(displayDate.toString())
         //setUsersID?
-            console.log(date)
+            console.log(displayDate)
             Axios.post(
               "http://localhost:3001/walks",
               {
@@ -69,7 +71,7 @@ function Walks() {
     componentDidMount();
     history();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  },[]);
+  },[date]);
 
   return (
     <>

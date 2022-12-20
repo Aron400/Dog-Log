@@ -5,7 +5,7 @@ import { Nav, NavLink, NavBtnLink } from "./HeaderElements";
 
 const Header = () => {
   return (
-    <>
+    <div className="header">
       <Nav>
         <div className="side-bar"><SideNavbar /></div>
         <NavLink to="/">
@@ -20,7 +20,7 @@ const Header = () => {
           <NavBtnLink to="/login">Login</NavBtnLink>
         </div>
       </Nav>
-    </>
+    </div>
   );
 };
 
