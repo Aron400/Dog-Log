@@ -20,12 +20,13 @@ function Home() {
             },
             )
             .then((res) => {
+              setDog('')
                 console.log("Server response: ", res);
             })
             .catch((err) => {
                 console.log("Server respondend with error: ", err);
             })
-            setDog('');
+            
   }
   const addUser = (e) => {
     e.preventDefault();
@@ -70,7 +71,7 @@ function Home() {
     getUsers();
     getDogs();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  },[]);
+  },[addDog, addUser]);
   const removeUser = (id) => {
     Axios.delete(`http://localhost:3001/deleteUser/${id}`)
   }
