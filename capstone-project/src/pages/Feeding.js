@@ -71,7 +71,7 @@ function Feeding() {
     componentDidMount();
     history();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  },[]);
+  },[date]);
 
   return (
     <>

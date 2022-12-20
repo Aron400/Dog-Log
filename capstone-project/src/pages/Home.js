@@ -20,12 +20,12 @@ function Home() {
             },
             )
             .then((res) => {
-              setDog('')
                 console.log("Server response: ", res);
             })
             .catch((err) => {
                 console.log("Server respondend with error: ", err);
             })
+            setDog('')
             
   }
   const addUser = (e) => {
@@ -71,7 +71,7 @@ function Home() {
     getUsers();
     getDogs();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  },[]);
+  },[dog, user]);
   const removeUser = (id) => {
     Axios.delete(`http://localhost:3001/deleteUser/${id}`)
   }
@@ -92,6 +92,7 @@ function Home() {
             onChange={(e) => {
               setDog(e.target.value)
             }}
+            value={dog}
           />
           <button onClick={addDog}>Add</button>
         </form>
@@ -103,6 +104,7 @@ function Home() {
             onChange={(e) => {
               setUser(e.target.value)
             }}
+            value={user}
           />
           <button onClick={addUser}>Add</button>
         </form>
