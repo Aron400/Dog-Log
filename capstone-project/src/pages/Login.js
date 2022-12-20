@@ -10,7 +10,7 @@ function Login() {
 
 	const navigateToHome = () => {
 		// 👇️ navigate to home
-		navigate("/home");
+		navigate("/");
 	};
 
 	Axios.defaults.withCredentials = true;

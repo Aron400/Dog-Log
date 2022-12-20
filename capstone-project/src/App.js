@@ -18,13 +18,13 @@ function App() {
 				{/* <SideNavbar /> */}
 				<Routes>
 					<Route element={<PrivateRoutes />}>
-						<Route path="/home" exact element={<Home />} />
+						<Route path="/" element={<Home />} />
 						<Route path="/register" element={<Register />} />
 						<Route path="/feeding" element={<Feed />} />
 						<Route path="/walks" element={<Walk />} />
 						<Route path="/medical" element={<Medical />} />
 					</Route>
-					<Route element={<Login />} path="/" />
+					<Route element={<Login />} path="/login" />
 				</Routes>
 			</Router>
 		</div>
