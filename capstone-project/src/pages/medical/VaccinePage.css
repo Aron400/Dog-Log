@@ -1,0 +1,33 @@
+.styled-table {
+  border-collapse: collapse;
+  margin: auto;
+  font-size: 0.9em;
+  font-family: sans-serif;
+  width: 85%;
+  box-shadow: rgba(0, 0, 0, 0.56) 0px 22px 70px 4px;
+}
+.vaccineHeader {
+  background-color: #f4d1c2;
+  opacity: 0.75;
+  color: black;
+}
+
+.vaccineTitle {
+  background-color: #2b3e52;
+  opacity: 0.75;
+  height: 40px;
+  color: white;
+  font-size: x-large;
+  vertical-align: auto;
+}
+
+.styled-table th,
+.styled-table td {
+  padding: 12px 15px;
+}
+
+.vaccineTable {
+  background-color: white;
+  border: 1px solid #2b3e52;
+}
+
