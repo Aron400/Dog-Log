@@ -6,10 +6,19 @@
   width: 85%;
   box-shadow: rgba(0, 0, 0, 0.56) 0px 22px 70px 4px;
 }
-.styled-table thead tr {
+.vaccineHeader {
+  background-color: #f4d1c2;
+  opacity: 0.75;
+  color: black;
+}
+
+.vaccineTitle {
   background-color: #2b3e52;
   opacity: 0.75;
+  height: 40px;
   color: white;
+  font-size: x-large;
+  vertical-align: auto;
 }
 
 .styled-table th,
@@ -17,22 +26,8 @@
   padding: 12px 15px;
 }
 
-.styled-table tbody tr:nth-of-type(even) {
-  background-color: #f4d1c2;
-}
-.styled-table tbody tr:nth-of-type(odd) {
+.vaccineTable {
   background-color: white;
-}
-
-.btn {
-  padding: 5px 8px;
-  text-align: center;
-  text-decoration: none;
-  margin-right: 2px;
-  padding-left: 10px;
-}
-
-.btn-vaccine {
-  margin: auto;
+  border: 1px solid #2b3e52;
 }
 

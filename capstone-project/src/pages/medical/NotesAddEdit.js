@@ -1,56 +1,54 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, useParams, Link } from "react-router-dom";
 import axios from "axios";
-import "./VaccineAddEdit.css";
+import "./medical.css";
 
 const initialState = {
   name: "",
-  givenDate: "",
-  expireDate: "",
 };
 
-const VaccineAddEdit = () => {
+const NotesAddEdit = () => {
   const [state, setState] = useState(initialState);
 
-  const { name, givenDate, expireDate } = state;
+  const { name } = state;
   const navigate = useNavigate();
   const { id } = useParams();
   useEffect(() => {
     axios
-      .get(`http://localhost:3001/getVaccine/${id}`)
+      .get(`http://localhost:3001/getNote/${id}`)
       .then((res) => setState({ ...res.data[0] }));
   }, [id]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (!name || !givenDate || !expireDate) {
-      alert("All fields mandatory");
+    if (!name) {
+      alert("Enter text to add a note");
       return;
     } else {
       if (!id) {
         axios
-          .post("http://localhost:3001/newVaccine", {
+          .post("http://localhost:3001/newNote", {
             name,
-            givenDate,
-            expireDate,
           })
           .then(() => {
-            setState({ name: "", givenDate: "", expireDate: "" });
+            setState({
+              name: "",
+            });
           })
           .catch((err) => console.log(err.response.data));
-        alert("Vaccine Added Succesfully");
+        alert("Note Added Succesfully");
       } else {
         axios
-          .post(`http://localhost:3001/updateVaccine/${id}`, {
+          .post(`http://localhost:3001/updateNote/${id}`, {
             name,
-            givenDate,
-            expireDate,
           })
           .then(() => {
-            setState({ name: "", givenDate: "", expireDate: "" });
+            setState({
+              name: "",
+            });
           })
           .catch((err) => console.log(err.response.data));
-        alert("Vaccine updated Succesfully");
+        alert("Note updated Succesfully");
       }
       navigate("/Medical");
     }
@@ -60,7 +58,6 @@ const VaccineAddEdit = () => {
     const { name, value } = e.target;
     setState({ ...state, [name]: value });
   };
-  //53:40
   return (
     <div style={{ marginTop: "100px" }}>
       <form
@@ -72,36 +69,19 @@ const VaccineAddEdit = () => {
         }}
         onSubmit={handleSubmit}
       >
-        <label htmlFor="name">Vaccine Name</label>
+        <label htmlFor="name">Add a Note</label>
         <input
           type="text"
           id="name"
           name="name"
-          placeholder="Enter the vaccine name"
+          className="noteAddInput"
+          placeholder="Enter your note here ..."
           value={name || ""}
           onChange={handleInputChange}
         />
-        <label htmlFor="givenDate">Given Date</label>
         <input
-          type="date"
-          id="givenDate"
-          name="givenDate"
-          placeholder="Enter the date given"
-          value={givenDate || ""}
-          onChange={handleInputChange}
-        />
-        <label htmlFor="expireDate">expireDate</label>
-        <input
-          type="date"
-          id="expireDate"
-          name="expireDate"
-          placeholder="Enter the expire date"
-          value={expireDate || ""}
-          onChange={handleInputChange}
-        />
-        <input
+          className="updateEdit"
           type="submit"
-          className="update-goback"
           value={id ? "Update" : "Save"}
         />
         <Link to="/Medical">
@@ -112,4 +92,4 @@ const VaccineAddEdit = () => {
   );
 };
 
-export default VaccineAddEdit;
+export default NotesAddEdit;
