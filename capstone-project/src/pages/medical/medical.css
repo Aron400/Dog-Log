@@ -1,6 +1,19 @@
-.vaccine-info {
+.notes {
+  width: 85%;
+  margin-left: auto;
+  margin-right: auto;
+  border: 1px solid #7a8796;
+
+  margin-top: 50px;
+  background: white;
+  border-radius: 10px;
+  padding: 10px;
+  box-shadow: rgba(0, 0, 0, 0.56) 0px 22px 70px 4px;
+}
+
+/* .vaccine-info {
   flex-direction: column;
-  /* padding: 1rem; */
+  padding: 1rem;
   width: 85%;
   margin-left: auto;
   margin-right: auto;
@@ -59,4 +72,4 @@ form td:last-child {
 
 form * {
   font-size: 20px;
-}
+} */
