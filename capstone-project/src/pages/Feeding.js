@@ -3,7 +3,7 @@ import Axios from "axios";
 import { v4 as uuid } from "uuid";
 import AddFeeding from "../components/AddFeeding";
 import FeedingHistory from "../components/FeedingHistory";
-import "./Feeding.css";
+import "./pages.css";
 
 function Feeding() {
   const [feeding, setFeeding] = useState('');
@@ -13,6 +13,8 @@ function Feeding() {
   const [date, setDate] = useState('');
   const [dogList, setDogList] = useState([]);
   const [userList, setUserList] = useState([]);
+  const [usersID, setUsersID] = useState('');
+  const [dogsID, setDogsID] = useState('');
 
   const componentDidMount = () => {
     console.log('testing')
@@ -32,8 +34,9 @@ function Feeding() {
             alert('field is mandatory');
             return;
         }
-        let dateShow = new Date();
-        let displayDate = dateShow.toLocaleString();
+        let date = new Date();
+        let displayDate = date.toLocaleString();
+        console.log(displayDate)
         setDate(displayDate.toString())
             console.log(date)
             Axios.post(
@@ -53,9 +56,20 @@ function Feeding() {
             })
             
   };
+
+  const history = () => {
+    Axios.get('http://localhost:3001/feedingHistory')
+      .then((res) => {
+        setFeedList(res.data)
+      })
+      .catch((err) => {
+        console.log("Server respondend with error: ", err);
+    })
+  }
   console.log(feedList);
   useEffect(() => {
     componentDidMount();
+    history();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   },[]);
 
@@ -63,9 +77,8 @@ function Feeding() {
     <>
       <h1>Feeding</h1>
       <div className="feeding">
-        <h1>Feeding</h1>
         <form className="feeding-form">
-          <h3>Add Feeding</h3>
+          <h2>Add Feeding</h2>
           <div className="field">
             <label>Dog:</label>
             <select
@@ -94,6 +107,20 @@ function Feeding() {
             </select>
             <br />
             <button onClick={addFeeding}>Add Feeding</button>
+          </div>
+          <div className="history">
+            <form>
+            <h2>Feeding History</h2>
+            {feedList.map((val, key) => {
+              return <div className="feed-card">
+                <ul>
+                  <li><b>Dog:</b> {val.dog} <b>User:</b> {val.feedingUser} <b>Date:</b> {val.feedingDate}</li>
+                </ul>
+                
+          </div>
+            
+        })}
+            </form>
           </div>
         </form>
       </div>

@@ -2,6 +2,7 @@ import React from "react";
 
 const ReadOnlyRow = ({ vaccine, handleEditClick, handleDeleteClick }) => {
   return (
+    <div className='field'>
     <tr>
       <td>{vaccine.vaccineName}</td>
       <td>{vaccine.givenDate}</td>
@@ -18,6 +19,7 @@ const ReadOnlyRow = ({ vaccine, handleEditClick, handleDeleteClick }) => {
         </button>
       </td>
     </tr>
+    </div>
   );
 };
 

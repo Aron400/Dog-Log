@@ -71,7 +71,7 @@ function Home() {
     getUsers();
     getDogs();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  },[addDog, addUser]);
+  },[]);
   const removeUser = (id) => {
     Axios.delete(`http://localhost:3001/deleteUser/${id}`)
   }
@@ -80,8 +80,10 @@ function Home() {
   }
 
   return (
-    <div className="home">
+    <div>
       <h1>Home</h1>
+      <div className="home">
+      
       <h3>Add Dog</h3>
         <form>
           <input 
@@ -116,7 +118,7 @@ function Home() {
         })}
       </div>
       <div className="dogs">
-        <h3>Dogs</h3>
+        <h2>Dogs</h2>
         
         {dogList.map((val, key) => {
           return <div className="dog-card">
@@ -130,6 +132,7 @@ function Home() {
         })}
       </div>
         
+    </div>
     </div>
   );
 }

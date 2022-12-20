@@ -157,12 +157,14 @@ app.get("/users", (req, res) => {
 
 app.post("/feeding", (req, res) => {
 	const dog = req.body.dog;
+	const dogsID = req.body.dogsID;
 	const user = req.body.user;
+	const usersID = req.body.usersID;
 	const date = req.body.date;
 
 	db.query(
-		"INSERT INTO feedings (dog, feedingUser, feedingDate) VALUES (?,?,?)",
-		[dog, user, date],
+		"INSERT INTO feedings (dog, dogsID, feedingUser, usersID, feedingDate) VALUES (?,?,?,?,?)",
+		[dog, dogsID, user, usersID, date],
 		(err, result) => {
 			if (err) {
 				console.log(err);
@@ -175,7 +177,10 @@ app.post("/feeding", (req, res) => {
 
 app.get("/feedingHistory", (req, res) => {
 	db.query(
-		`SELECT dog, feedingUser, feedingDate FROM feedings`,
+		`SELECT dog, feedingUser, feedingDate 
+		FROM feedings
+		ORDER BY feedingsID DESC
+		LIMIT 10`,
 		(err, result) => {
 			if (err) {
 				console.log(err);
@@ -202,6 +207,22 @@ app.post("/walks", (req, res) => {
 				console.log(err);
 			} else {
 				res.send("Values Inserted");
+			}
+		}
+	);
+});
+
+app.get("/walkHistory", (req, res) => {
+	db.query(
+		`SELECT dog, walkUser, walkDate 
+		FROM walks
+		ORDER BY walksID DESC
+		LIMIT 10`,
+		(err, result) => {
+			if (err) {
+				console.log(err);
+			} else {
+				res.send(result);
 			}
 		}
 	);
