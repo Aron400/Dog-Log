@@ -37,6 +37,5 @@ input {
 
 body {
   background-image: url("https://media.istockphoto.com/id/490747664/photo/gray-doggy-tile-pattern-repeat-background.jpg?b=1&s=170667a&w=0&k=20&c=H6SZuhK9oigNGww8qa60fSHoODDpiPQe-916-Pc7FeE=");
-  height: 100%;
+  overflow: scroll;
 }
-

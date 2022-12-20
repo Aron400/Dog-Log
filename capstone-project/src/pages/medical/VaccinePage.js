@@ -19,18 +19,22 @@ const VaccinePage = () => {
   const deleteVaccine = (id) => {
     if (window.confirm("Are you sure you want to delete?")) {
       axios.delete(`http://localhost:3001/removeVaccine/${id}`);
-      alert("Contact deleted successfully");
+      alert("Vaccine deleted successfully");
       setTimeout(() => loadData(), 500);
     }
   };
 
   return (
     <div style={{ marginTop: "50px" }}>
-      <h2 style={{ textAlign: "center" }}>Vaccine Information</h2>
+      <table className="styled-table">
+        <tr className="vaccineTitle" style={{ textAlign: "center" }}>
+          Vaccine Information
+        </tr>
+      </table>
       <table className="styled-table">
         <thead>
-          <tr>
-            <th style={{ textAlign: "center" }}>Name</th>{" "}
+          <tr className="vaccineHeader">
+            <th style={{ textAlign: "center" }}>Vaccine Name</th>{" "}
             <th style={{ textAlign: "center" }}>Given Date</th>{" "}
             <th style={{ textAlign: "center" }}>Expire Date</th>{" "}
             <th style={{ textAlign: "center" }}>Action</th>
@@ -39,16 +43,16 @@ const VaccinePage = () => {
         <tbody>
           {data.map((item, index) => {
             return (
-              <tr key={item.id}>
+              <tr key={item.id} className="vaccineTable">
                 <td>{item.name}</td>
                 <td>{item.givenDate}</td>
                 <td>{item.expireDate}</td>
                 <td>
                   <Link to={`/updateVaccine/${item.id}`}>
-                    <button className="btn btn-edit">Edit</button>
+                    <button className="editButton">Edit</button>
                   </Link>
                   <button
-                    className="btn btn-delete"
+                    className="deleteButton"
                     onClick={() => deleteVaccine(item.id)}
                   >
                     Delete

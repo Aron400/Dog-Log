@@ -1,6 +1,5 @@
 import "./App.css";
 import Header from "./components/Header";
-// import SideNavbar from "./components/side-navbar";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";
 import Feed from "./pages/Feeding";
@@ -10,13 +9,13 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import VaccineAddEdit from "./pages/medical/VaccineAddEdit";
 import PrivateRoutes from "./components/PrivateRoutes";
+import NotesAddEdit from "./pages/medical/NotesAddEdit";
 
 function App() {
   return (
     <div className="app">
       <Router>
         <Header />
-        {/* <SideNavbar /> */}
         <Routes>
           <Route>
             <Route path="/" exact element={<Home />} />
@@ -26,8 +25,9 @@ function App() {
             <Route path="/medical" element={<Medical />} />
             <Route path="/addVaccine" element={<VaccineAddEdit />} />
             <Route path="/updateVaccine/:id" element={<VaccineAddEdit />} />
+            <Route path="/addNote" element={<NotesAddEdit />} />
+            <Route path="/updateNote/:id" element={<NotesAddEdit />} />
           </Route>
-          
         </Routes>
       </Router>
     </div>

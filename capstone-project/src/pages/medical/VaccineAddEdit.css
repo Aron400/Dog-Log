@@ -8,12 +8,11 @@ select {
   border: 1px solid #ccc;
   border-radius: 4px;
   box-sizing: border-box;
-  color: orange;
 }
 
-input[type="submit"] {
+.update-goback {
   width: 100%;
-  background-color: green;
+  background-color: #2b3e52;
   color: #ccc;
   padding: 14px 20px;
   margin: 8px 0;
@@ -24,16 +23,16 @@ input[type="submit"] {
 
 input[type="button"] {
   width: 100%;
-  background-color: yellow;
+  /* background-color: navy; */
   color: black;
   padding: 14px 20px;
   margin: 8px 0;
-  border: none;
+  border: 1px solid #2b3e52;
   border-radius: 4px;
   cursor: pointer;
 }
 
 input[type="submit"]:hover,
 input[type="button"]:hover {
-  background-color: aqua;
+  background-color: #c97757;
 }
