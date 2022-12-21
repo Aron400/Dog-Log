@@ -34,7 +34,7 @@ app.use(
 		resave: false,
 		saveUninitialized: false,
 		cookie: {
-			expires: 60 * 60 * 24,
+			expires: 60 * 60 * 1000,
 		},
 	})
 );
@@ -88,7 +88,7 @@ app.post("/login", (req, res) => {
 		if (result.length > 0) {
 			bcrypt.compare(password, result[0].password, (error, response) => {
 				if (response) {
-					req.session.user = result;
+					req.session.user = result[0];
 					console.log(req.session.user);
 					res.send(result);
 				} else {
@@ -103,11 +103,11 @@ app.post("/login", (req, res) => {
 
 app.post("/addDog", (req, res) => {
 	const name = req.body.name;
-	const userloginID = req.session.user.id;
-
+	console.log(req.session.user);
+	const userId = req.session.user.id;
 	db.query(
-		"INSERT INTO dogs (name, userloginID) VALUES (?, ?)",
-		[name, userloginID],
+		"INSERT INTO dogs (name, userloginID) VALUES (?,?)",
+		[name, userId],
 		(err, result) => {
 			if (err) {
 				console.log(err);
@@ -125,8 +125,8 @@ app.get("/dogs", (req, res) => {
 			(SELECT feedingDate from feedings as f WHERE f.dogsID = d.dogsID ORDER BY feedingDate DESC LIMIT 1) as feedingDate,
 			(SELECT walkUser from walks as w WHERE w.dogsID = d.dogsID ORDER BY walkDate DESC LIMIT 1) as walkUser,
 			(SELECT walkDate from walks as w WHERE w.dogsID = d.dogsID ORDER BY walkDate DESC LIMIT 1) as walkDate
-		FROM dogs as d
-		WHERE d.userloginID = ${userID}`,
+			FROM dogs as d
+			WHERE d.userloginID = ${userID}`,
 		(err, result) => {
 			if (err) {
 				console.log(err);
@@ -139,20 +139,25 @@ app.get("/dogs", (req, res) => {
 
 app.post("/addUser", (req, res) => {
 	const name = req.body.name;
+	const userId = req.session.user.id;
 
-	db.query("INSERT INTO users (name) VALUES (?)", [name], (err, result) => {
-		if (err) {
-			console.log(err);
-		} else {
-			res.send("User Inserted");
+	db.query(
+		"INSERT INTO users (name, userloginID) VALUES (?,?)",
+		[name, userId],
+		(err, result) => {
+			if (err) {
+				console.log(err);
+			} else {
+				res.send("User Inserted");
+			}
 		}
-	});
+	);
 });
 app.get("/users", (req, res) => {
 	const userID = req.session.user.id;
+
 	db.query(
-		`SELECT * FROM users
-		WHERE userloginID = ${userID}`,
+		`SELECT * FROM users WHERE userloginID = ${userID}`,
 		(err, result) => {
 			if (err) {
 				console.log(err);
@@ -165,12 +170,14 @@ app.get("/users", (req, res) => {
 
 app.post("/feeding", (req, res) => {
 	const dog = req.body.dog;
+	const dogsID = req.body.dogsID;
 	const user = req.body.user;
+	const usersID = req.body.usersID;
 	const date = req.body.date;
 
 	db.query(
-		"INSERT INTO feedings (dog, user, date) VALUES (?,?,?)",
-		[dog, user, date],
+		"INSERT INTO feedings (dog, dogsID, feedingUser, usersID, feedingDate) VALUES (?,?,?,?,?)",
+		[dog, dogsID, user, usersID, date],
 		(err, result) => {
 			if (err) {
 				console.log(err);
@@ -181,19 +188,53 @@ app.post("/feeding", (req, res) => {
 	);
 });
 
+app.get("/feedingHistory", (req, res) => {
+	db.query(
+		`SELECT dog, feedingUser, feedingDate 
+		FROM feedings
+		ORDER BY feedingsID DESC
+		LIMIT 10`,
+		(err, result) => {
+			if (err) {
+				console.log(err);
+			} else {
+				res.send(result);
+			}
+		}
+	);
+});
+
 app.post("/walks", (req, res) => {
 	const dog = req.body.dog;
+	const dogsID = req.body.dogsID;
 	const user = req.body.user;
+	const usersID = req.body.usersID;
 	const date = req.body.date;
 
 	db.query(
-		"INSERT INTO walks (dog, user, date) VALUES (?,?,?)",
-		[dog, user, date],
+		"INSERT INTO walks (dog, dogsID, walkUser, usersID, walkDate) VALUES (?,?,?,?,?)",
+		[dog, dogsID, user, usersID, date],
 		(err, result) => {
 			if (err) {
 				console.log(err);
 			} else {
 				res.send("Values Inserted");
+			}
+		}
+	);
+});
+
+app.get("/walkHistory", (req, res) => {
+	db.query(
+		`SELECT dog, walkUser, walkDate 
+		FROM walks
+		ORDER BY walksID DESC
+		LIMIT 10`,
+		(err, result) => {
+			if (err) {
+				console.log(err);
+			} else {
+				res.send(result);
 			}
 		}
 	);
@@ -213,7 +254,7 @@ app.post("/lastFeeding", (req, res) => {
 	);
 });
 
-app.delete("/delete/:id", (req, res) => {
+app.delete("/deleteUser/:id", (req, res) => {
 	const id = req.params.id;
 	db.query(`DELETE FROM users WHERE usersID = ${id}`, (err, result) => {
 		if (err) {
@@ -224,6 +265,149 @@ app.delete("/delete/:id", (req, res) => {
 		}
 	});
 });
+
+//add a note
+// app.post("/addNote", (req, res) => {
+//   const note_text = req.body.note_text;
+
+//   db.query(
+//     "INSERT INTO notes (note_text) VALUES (?)",
+//     [note_text],
+//     (err, result) => {
+//       if (err) {
+//         console.log(err);
+//       } else {
+//         res.send("Note Added");
+//       }
+//     }
+//   );
+// });
+
+// app.get("/notes", (req, res) => {
+//   db.query(`SELECT * FROM notes`, (err, result) => {
+//     if (err) {
+//       console.log(err);
+//     } else {
+//       res.send(result);
+//     }
+//   });
+// });
+
+app.get("/getVaccine", (req, res) => {
+	const sqlGet = "SELECT* FROM vaccineList";
+	db.query(sqlGet, (error, result) => {
+		res.send(result);
+	});
+});
+
+app.post("/newVaccine", (req, res) => {
+	const { name, givenDate, expireDate } = req.body;
+	const sqlInsert =
+		"INSERT INTO vaccineList(name,givenDate,expireDate) VALUES (?,?,?)";
+	db.query(sqlInsert, [name, givenDate, expireDate], (error, result) => {
+		if (error) {
+			console.log(error);
+		}
+	});
+});
+
+app.delete("/removeVaccine/:id", (req, res) => {
+	const { id } = req.params;
+	const sqlRemove = "DELETE FROM vaccineList WHERE id = ?";
+	db.query(sqlRemove, id, (error, result) => {
+		if (error) {
+			console.log(error);
+		}
+	});
+});
+
+app.get("/getVaccine/:id", (req, res) => {
+	const { id } = req.params;
+	const sqlGet = "SELECT* FROM vaccineList WHERE id =?";
+	db.query(sqlGet, id, (error, result) => {
+		if (error) {
+			console.log(error);
+		}
+		res.send(result);
+	});
+});
+
+app.post("/updateVaccine/:id", (req, res) => {
+	const { id } = req.params;
+	const { name, givenDate, expireDate } = req.body;
+	const sqlUpdate =
+		"UPDATE vaccineList SET name=?, givenDate=?, expireDate=? WHERE id=?";
+	db.query(sqlUpdate, [name, givenDate, expireDate, id], (error, result) => {
+		if (error) {
+			console.log(error);
+		}
+		res.send(result);
+	});
+});
+
+app.delete("/deleteDog/:id", (req, res) => {
+	const id = req.params.id;
+	db.query(`DELETE FROM dogs WHERE dogsID = ${id}`, (err, result) => {
+		if (err) {
+			console.log(err);
+			res.end();
+		} else {
+			res.send(result);
+		}
+	});
+});
+
+//notes
+app.get("/getNotes", (req, res) => {
+	const sqlGet = "SELECT* FROM notes";
+	db.query(sqlGet, (error, result) => {
+		res.send(result);
+	});
+});
+
+app.post("/newNote", (req, res) => {
+	const { name } = req.body;
+	const sqlInsert = "INSERT INTO notes (name) VALUES (?)";
+	db.query(sqlInsert, [name], (error, result) => {
+		if (error) {
+			console.log(error);
+		}
+	});
+});
+
+app.delete("/removeNote/:id", (req, res) => {
+	const { id } = req.params;
+	const sqlRemove = "DELETE FROM notes WHERE id = ?";
+	db.query(sqlRemove, id, (error, result) => {
+		if (error) {
+			console.log(error);
+		}
+	});
+});
+
+app.get("/getNotes/:id", (req, res) => {
+	const { id } = req.params;
+	const sqlGet = "SELECT* FROM notes WHERE id =?";
+	db.query(sqlGet, id, (error, result) => {
+		if (error) {
+			console.log(error);
+		}
+		res.send(result);
+	});
+});
+
+app.post("/updateNote/:id", (req, res) => {
+	const { id } = req.params;
+	const { name } = req.body;
+	const sqlUpdate = "UPDATE notes SET name=? WHERE id=?";
+	db.query(sqlUpdate, [name, id], (error, result) => {
+		if (error) {
+			console.log(error);
+		}
+		res.send(result);
+	});
+});
+
 app.listen(3001, () => {
 	console.log("yay");
 });

@@ -24,7 +24,7 @@ function Login() {
 				setLoginStatus(response.data.message);
 			} else {
 				setLoginStatus(response.data[0].email);
-				localStorage.setItem("token", response.data.email);
+				localStorage.setItem("token", response.data[0].email);
 				navigateToHome();
 			}
 		});

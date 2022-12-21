@@ -38,14 +38,12 @@ export const NavBtnLink = styled(Link)`
   }
   margin-left: 24px;
   @media screen and (max-width: 768px) {
-    position: absolute;
     top: 10px;
     right: 0;
     transform: translate(-30%, 20%);
   }
 
   margin: 0;
-  position: absolute;
   top: 5%;
   // -ms-transform: translateY(-50%);
   transform: translateY(-50%);

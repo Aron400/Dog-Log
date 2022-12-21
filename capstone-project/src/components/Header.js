@@ -5,9 +5,9 @@ import { Nav, NavLink, NavBtnLink } from "./HeaderElements";
 
 const Header = () => {
   return (
-    <>
+    <div className="header">
       <Nav>
-        <SideNavbar />
+        <div className="side-bar"><SideNavbar /></div>
         <NavLink to="/">
           <img
             src={require("../images/logoandimage2.png")}
@@ -20,7 +20,7 @@ const Header = () => {
           <NavBtnLink to="/login">Login</NavBtnLink>
         </div>
       </Nav>
-    </>
+    </div>
   );
 };
 
