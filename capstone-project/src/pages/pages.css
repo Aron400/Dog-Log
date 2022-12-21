@@ -29,6 +29,12 @@ button {
   flex-direction: row;
 }
 
+.user-card {
+  display: flex;
+  align-items: center;
+  width: 150px
+}
+
 form {
   flex-direction: column;
   text-align: center;
@@ -57,6 +63,7 @@ button {
 
 h3 {
   flex-direction: column;
+  text-align: center;
 }
 
 h1 {

@@ -34,8 +34,8 @@ function Walks() {
             alert('field is mandatory');
             return;
         }
-        let date = new Date();
-        let displayDate = date.toLocaleString();
+        let dateUnform = new Date();
+        let displayDate = dateUnform.toLocaleString();
         setDate(displayDate.toString())
         //setUsersID?
             console.log(displayDate)
