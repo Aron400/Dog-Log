@@ -120,10 +120,12 @@ function Home() {
       <table className="dogs" style={{ marginTop: "50px" }}>
         <thead>
           <tr>
-            {" "}
-            <th style={{ textAlign: "center" }}>Name</th>{" "}
-            <th style={{ textAlign: "center" }}>Last Feeding</th>{" "}
-            <th style={{ textAlign: "center" }}>Last Walk</th>{" "}
+            <th style={{ textAlign: "center" }}>Name</th>
+            <th style={{ textAlign: "center" }}>Last Feeding User</th>
+            <th style={{ textAlign: "center" }}>Last Feeding Date</th>
+            <th style={{ textAlign: "center" }}>Last Walk User</th>
+            <th style={{ textAlign: "center" }}>Last Walk Date</th>
+            <th style={{ textAlign: "center" }}>Remove</th>
           </tr>
         </thead>
         <tbody>
@@ -133,6 +135,8 @@ function Home() {
                 <td>{val.name}</td>
                 <td>{val.feedingUser}</td>
                 <td>{val.feedingDate}</td>
+                <td>{val.walkUser}</td>
+                <td>{val.walkDate}</td>
                 <td>
                   <button
                     onClick={() => {
@@ -148,25 +152,7 @@ function Home() {
         </tbody>
       </table>
 
-      <div className="users" style={{ marginTop: "50px" }}>
-        <div>
-          <h3>Users</h3>
-          {userList.map((val, key) => {
-            return (
-              <div className="user-card">
-                <h4>{val.name}</h4>
-                <button
-                  onClick={() => {
-                    removeUser(val.usersID);
-                  }}
-                >
-                  remove
-                </button>
-              </div>
-            );
-          })}
-        </div>
-      </div>
+      
     </div>
   );
 }
