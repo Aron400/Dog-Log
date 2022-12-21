@@ -112,7 +112,9 @@ function Walks() {
               ))}
             </select>
             <br />
-            <button classname="add" onClick={addWalk}>Add Walks</button>
+            <div className="inputPadding">
+              <button classname="add" onClick={addWalk}>Add Walks</button>
+            </div>
           </div>
           </table>
           <div style={{ marginTop: "50px" }} className="history">

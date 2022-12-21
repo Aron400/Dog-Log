@@ -116,7 +116,9 @@ function Feeding() {
               ))}
             </select>
             <br />
-            <button className="add" onClick={addFeeding}>Add Feeding</button>
+            <div className="inputPadding">
+              <button className="addButton" onClick={addFeeding}>Add Feeding</button>
+            </div>
           </div>
           </table>
           <div style={{ marginTop: "50px" }} className="history">
