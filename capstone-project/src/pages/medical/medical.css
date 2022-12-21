@@ -13,9 +13,10 @@
 }
 
 .noteItem {
-  border: 1px solid grey;
   max-width: 4500px;
   height: 30px;
+  background-color: white;
+  vertical-align: middle;
 }
 
 .noteText {
@@ -33,3 +34,7 @@
   cursor: pointer;
 }
 
+.noteItemPadding {
+  padding: 10px;
+  border: 1px solid grey;
+}

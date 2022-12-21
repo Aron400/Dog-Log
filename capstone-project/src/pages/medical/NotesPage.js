@@ -34,9 +34,11 @@ const NotesPage = () => {
         <tbody>
           {data.map((item, index) => {
             return (
-              <tr key={item.id} >
-                <div className="noteItem">
-                  <td className="noteText">{item.name}</td>
+              <tr key={item.id}>
+                <div className="noteItemPadding">
+                  <div className="noteItem">
+                    <td className="noteText">{item.name}</td>
+                  </div>
                 </div>
                 <td className="notesButtons">
                   <Link to={`/updateNote/${item.id}`}>
