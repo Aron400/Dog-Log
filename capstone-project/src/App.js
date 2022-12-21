@@ -10,28 +10,32 @@ import Register from "./pages/Register";
 import VaccineAddEdit from "./pages/medical/VaccineAddEdit";
 import PrivateRoutes from "./components/PrivateRoutes";
 import NotesAddEdit from "./pages/medical/NotesAddEdit";
+import { useState } from "react";
 
 function App() {
-  return (
-    <div className="app">
-      <Router>
-        <Header />
-        <Routes>
-          <Route>
-            <Route path="/" exact element={<Home />} />
-            <Route path="/register" element={<Register />} />
-            <Route path="/feeding" element={<Feed />} />
-            <Route path="/walks" element={<Walk />} />
-            <Route path="/medical" element={<Medical />} />
-            <Route path="/addVaccine" element={<VaccineAddEdit />} />
-            <Route path="/updateVaccine/:id" element={<VaccineAddEdit />} />
-            <Route path="/addNote" element={<NotesAddEdit />} />
-            <Route path="/updateNote/:id" element={<NotesAddEdit />} />
-          </Route>
-        </Routes>
-      </Router>
-    </div>
-  );
+	const [loggedIn, setLoggedIn] = useState(localStorage.access ? true : false);
+
+	return (
+		<div className="app">
+			<Router>
+				<Header />
+				<Routes>
+					<Route element={<PrivateRoutes />}>
+						<Route path="/" exact element={<Home />} />
+						<Route path="/feeding" element={<Feed />} />
+						<Route path="/walks" element={<Walk />} />
+						<Route path="/medical" element={<Medical />} />
+						<Route path="/addVaccine" element={<VaccineAddEdit />} />
+						<Route path="/updateVaccine/:id" element={<VaccineAddEdit />} />
+						<Route path="/addNote" element={<NotesAddEdit />} />
+						<Route path="/updateNote/:id" element={<NotesAddEdit />} />
+					</Route>
+					<Route element={<Login />} path="/login" />
+					<Route path="/register" element={<Register />} />
+				</Routes>
+			</Router>
+		</div>
+	);
 }
 // function App() {
 // 	return (
