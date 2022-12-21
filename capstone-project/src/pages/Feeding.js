@@ -1,9 +1,5 @@
 import React, { useState, useEffect } from "react";
 import Axios from "axios";
-import { v4 as uuid } from "uuid";
-import AddFeeding from "../components/AddFeeding";
-import FeedingHistory from "../components/FeedingHistory";
-// import "./pages.css";
 
 function Feeding() {
   const [feeding, setFeeding] = useState('');
@@ -115,7 +111,7 @@ function Feeding() {
               ))}
             </select>
             <br />
-            <button onClick={addFeeding}>Add Feeding</button>
+            <button className="add" onClick={addFeeding}>Add Feeding</button>
           </div>
           </table>
           <div style={{ marginTop: "50px" }} className="history">
@@ -145,8 +141,6 @@ function Feeding() {
           </tbody>
             </table>
           </div>
-        
-      
     </div>
     </div>
   );
