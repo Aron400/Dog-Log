@@ -44,10 +44,10 @@ const VaccinePage = () => {
           {data.map((item, index) => {
             return (
               <tr key={item.id} className="vaccineTable">
-                <td>{item.name}</td>
-                <td>{item.givenDate}</td>
-                <td>{item.expireDate}</td>
-                <td>
+                <td style={{ textAlign: "center" }}>{item.name}</td>
+                <td style={{ textAlign: "center" }}>{item.givenDate}</td>
+                <td style={{ textAlign: "center" }}>{item.expireDate}</td>
+                <td style={{ textAlign: "center" }}>
                   <Link to={`/updateVaccine/${item.id}`}>
                     <button className="editButton">Edit</button>
                   </Link>
@@ -66,7 +66,9 @@ const VaccinePage = () => {
           })}
         </tbody>
         <Link to="/addVaccine">
-          <button className="btn btn-vaccine">Add a Vaccine</button>
+          <div className="inputPadding">
+            <button className="addButton">Add a Vaccine</button>
+          </div>
         </Link>
       </table>
     </div>
