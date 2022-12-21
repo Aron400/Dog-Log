@@ -34,8 +34,8 @@ function Feeding() {
             alert('field is mandatory');
             return;
         }
-        let date = new Date();
-        let displayDate = date.toLocaleString();
+        let dateUnform = new Date();
+        let displayDate = dateUnform.toLocaleString();
         console.log(displayDate)
         setDate(displayDate.toString())
             console.log(date)
