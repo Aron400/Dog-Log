@@ -1,12 +1,9 @@
 import React, { useState, useEffect } from "react";
 import Axios from "axios";
-import "./pages.css";
-
-
-
 
 function Walks() {
-  const [walking, setWalking] = useState('');
+  
+  const [walk, setWalk] = useState('');
   const [walkList, setWalkList] = useState([]);
   const [dog, setDog] = useState('');
   const [user, setUser] = useState('');
@@ -21,14 +18,17 @@ function Walks() {
     Axios.get("http://localhost:3001/users").then((res) => {
       const users = res.data;
       setUserList(users);
+      setUser(users[0].name)
     });
     Axios.get("http://localhost:3001/dogs").then((res) => {
       const dogs = res.data;
       setDogList(dogs);
+      setDog(dogs[0].name)
     });
+    history();
   }
 
-  const addWalking = (e) => {
+  const addWalk = (e) => {
     e.preventDefault();
         if (dog ==='' || user ==='') {
             alert('field is mandatory');
@@ -36,25 +36,8 @@ function Walks() {
         }
         let dateUnform = new Date();
         let displayDate = dateUnform.toLocaleString();
-        setDate(displayDate.toString())
-        //setUsersID?
-            console.log(displayDate)
-            Axios.post(
-              "http://localhost:3001/walks",
-              {
-                dog: dog,
-                user: user,
-                date: date
-              },
-              console.log("hi")
-            )
-            .then((res) => {
-                console.log("Server response: ", res);
-            })
-            .catch((err) => {
-                console.log("Server respondend with error: ", err);
-            })
-            
+        console.log(displayDate)
+        setDate(displayDate.toString())      
   };
 
   const history = () => {
@@ -67,23 +50,47 @@ function Walks() {
     })
   }
   console.log(walkList);
+
   useEffect(() => {
     componentDidMount();
-    history();
+  }, []);
+
+  useEffect(() => {
+    if (date) {
+      Axios.post(
+        "http://localhost:3001/walks",
+        {
+          dog: dog,
+          user: user,
+          date: date
+        },
+      )
+      .then((res) => {
+          console.log("Server response: ", res);
+      }).then(() => {
+        history();
+      })
+      .catch((err) => {
+          console.log("Server respondend with error: ", err);
+      })
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   },[date]);
 
   return (
-    <>
+    <div>
       <h1>Walks</h1>
-      <div className="walks">
-        <form className="walks-form">
-          <h2>Add walk</h2>
+    <div style={{ marginTop: "50px"}}>
+      <table className="styled-table">
+        <tr className="vaccineTitle" style={{ textAlign: "center" }}>
+          Add Walk
+        </tr>
+      </table>
+      <table className="styled-table">
           <div className="field">
-            <label>Dog:</label>
+            <label>Select Dog:</label>
             <select
               name="dog"
-              
               onChange={(e) => {
                 setDog(e.target.value)
               }}
@@ -93,10 +100,9 @@ function Walks() {
               ))}
             </select>
             <br />
-            <label>User:</label>
+            <label>Select User:</label>
             <select
               name="user"
-              
               onChange={(e) => {
                 setUser(e.target.value)
               }}
@@ -106,25 +112,38 @@ function Walks() {
               ))}
             </select>
             <br />
-            <button onClick={addWalking}>Add walk</button>
+            <button classname="add" onClick={addWalk}>Add Walks</button>
           </div>
-          <div className="history">
-            <h2>Walk History</h2>
+          </table>
+          <div style={{ marginTop: "50px" }} className="history">
+          <table className="styled-table">
+        <tr className="vaccineTitle" style={{ textAlign: "center" }}>
+          Walk History
+        </tr>
+      </table>
+          <table className="styled-table">
+            <thead>
+                <tr className="vaccineHeader">
+                  <th style={{ textAlign: "center" }}>Dog Name</th>{" "}
+                  <th style={{ textAlign: "center" }}>User Name</th>{" "}
+                  <th style={{ textAlign: "center" }}>Walk Date</th>{" "}
+                </tr>
+            </thead>
+            <tbody className="white">
             {walkList.map((val, key) => {
-              return <div className="walk-card">
-                <ul>
-                  <li><b>Dog:</b> {val.dog} <b>User:</b> {val.walkUser} <b>Date:</b> {val.walkDate}</li>
-                </ul>
-                
-                
-                
+              return (
+                  <tr>
+                    <td style={{ textAlign: "center" }}>{val.dog}</td>
+                  <td style={{ textAlign: "center" }}>{val.walkUser}</td>
+                  <td style={{ textAlign: "center" }}>{val.walkDate}</td>
+                  </tr>
+          )
+          })}
+          </tbody>
+            </table>
           </div>
-            
-        })}
-          </div>
-        </form>
-      </div>
-    </>
+    </div>
+    </div>
   );
 }
 

@@ -1,140 +1,158 @@
-import  Axios from "axios";
-import React, {useState, useEffect} from "react";
+import Axios from "axios";
+import React, { useState, useEffect } from "react";
 import "./pages.css";
 
 function Home() {
-  const [dog, setDog] = useState('');
-  const [user, setUser] = useState('');
+  const [dog, setDog] = useState("");
+  const [user, setUser] = useState("");
   const [dogList, setDogList] = useState([]);
   const [userList, setUserList] = useState([]);
 
   const addDog = (e) => {
     e.preventDefault();
-        if (dog ==='') {
-            alert('field is mandatory');
-            return;
-        }
-            console.log(dog)
-            Axios.post('http://localhost:3001/addDog', {
-                name: dog,
-            },
-            )
-            .then((res) => {
-                console.log("Server response: ", res);
-            })
-            .catch((err) => {
-                console.log("Server respondend with error: ", err);
-            })
-            setDog('')
-            
-  }
+    if (dog === "") {
+      alert("field is mandatory");
+      return;
+    }
+    console.log(dog);
+    Axios.post("http://localhost:3001/addDog", {
+      name: dog,
+    })
+      .then((res) => {
+        console.log("Server response: ", res);
+      })
+      .catch((err) => {
+        console.log("Server respondend with error: ", err);
+      });
+    setDog("");
+  };
   const addUser = (e) => {
     e.preventDefault();
-        if (user ==='') {
-            alert('field is mandatory');
-            return;
-        }
-            console.log(user)
-            Axios.post('http://localhost:3001/addUser', {
-                  name: user,
-              })
-              .then((res) => {
-                  console.log("Server response: ", res);
-              })
-              .catch((err) => {
-                console.log("Server respondend with error: ", err);
-              })
-            setUser('');
-  }
+    if (user === "") {
+      alert("field is mandatory");
+      return;
+    }
+    console.log(user);
+    Axios.post("http://localhost:3001/addUser", {
+      name: user,
+    })
+      .then((res) => {
+        console.log("Server response: ", res);
+      })
+      .catch((err) => {
+        console.log("Server respondend with error: ", err);
+      });
+    setUser("");
+  };
   const getDogs = () => {
-    Axios.get('http://localhost:3001/dogs')
+    Axios.get("http://localhost:3001/dogs")
       .then((res) => {
-          console.log("Server response: ", res);
-          console.log(res.data)
-          setDogList(res.data)
+        console.log("Server response: ", res);
+        console.log(res.data);
+        setDogList(res.data);
       })
       .catch((err) => {
-          console.log("Server respondend with error: ", err);
-      })
-  }
+        console.log("Server respondend with error: ", err);
+      });
+  };
   const getUsers = () => {
-    Axios.get('http://localhost:3001/users')
+    Axios.get("http://localhost:3001/users")
       .then((res) => {
-          console.log("Server response: ", res);
-          setUserList(res.data)
+        console.log("Server response: ", res);
+        setUserList(res.data);
       })
       .catch((err) => {
-          console.log("Server respondend with error: ", err);
-      })
-  }
+        console.log("Server respondend with error: ", err);
+      });
+  };
   useEffect(() => {
     getUsers();
     getDogs();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  },[dog, user]);
+  }, [dog, user]);
   const removeUser = (id) => {
-    Axios.delete(`http://localhost:3001/deleteUser/${id}`)
-  }
+    Axios.delete(`http://localhost:3001/deleteUser/${id}`);
+  };
   const removeDog = (id) => {
-    Axios.delete(`http://localhost:3001/deleteDog/${id}`)
-  }
+    Axios.delete(`http://localhost:3001/deleteDog/${id}`);
+  };
 
   return (
     <div>
       <h1>Home</h1>
-      <div className="home">
-      
-      <h3>Add Dog</h3>
-        <form>
-          <input 
-            type='text'
-            name='new-dog'
-            onChange={(e) => {
-              setDog(e.target.value)
-            }}
-            value={dog}
-          />
-          <button onClick={addDog}>Add</button>
-        </form>
-        <h3>Add User</h3>
-        <form>
-          <input 
-            type='text'
-            name='new-user'
-            onChange={(e) => {
-              setUser(e.target.value)
-            }}
-            value={user}
-          />
-          <button onClick={addUser}>Add</button>
-        </form>
+      <div style={{ marginTop: "50px" }}>
+        <div className="addDogUser">
+          <h3>Add Dog</h3>
+          <div className="inputPadding">
+            <input
+              type="text"
+              name="new-dog"
+              placeholder="enter your dog name here ..."
+              className="addDogInput"
+              onChange={(e) => {
+                setDog(e.target.value);
+              }}
+              value={dog}
+            />
+            <button className="addButton" onClick={addDog}>
+              Add
+            </button>{" "}
+          </div>
 
-      <div className="users">
-        <h3>Users</h3>
-        
-        {userList.map((val, key) => {
-          return <div className="user-card">
-            <h4>{val.name}</h4>
-            <button onClick={() => {removeUser(val.usersID)}}>remove</button>
-            </div>
-        })}
+          <h3>Add User</h3>
+          <div className="inputPadding">
+            <input
+              className="newUser"
+              placeholder="enter a username here ..."
+              type="text"
+              name="new-user"
+              onChange={(e) => {
+                setUser(e.target.value);
+              }}
+              value={user}
+            />
+          </div>
+          <button className="addButton" onClick={addUser}>
+            Add
+          </button>
+        </div>
       </div>
-      <div className="dogs">
-        <h2>Dogs</h2>
-        
-        {dogList.map((val, key) => {
-          return <div className="dog-card">
-            <h4>{val.name}</h4>
-            <div>lastFeeding: user: {val.feedingUser}, date: {val.feedingDate}</div>
-            <div>lastWalk: user: {val.walkUser} - date: {val.walkDate}</div>
-            <div>lastMed</div>
-            <button onClick={() => {removeDog(val.dogsID)}}>remove</button>
-            </div>
-            
-        })}
-      </div>
-        
-    </div>
+      <table className="dogs" style={{ marginTop: "50px" }}>
+        <thead>
+          <tr>
+            <th style={{ textAlign: "center" }}>Name</th>
+            <th style={{ textAlign: "center" }}>Last Feeding User</th>
+            <th style={{ textAlign: "center" }}>Last Feeding Date</th>
+            <th style={{ textAlign: "center" }}>Last Walk User</th>
+            <th style={{ textAlign: "center" }}>Last Walk Date</th>
+            <th style={{ textAlign: "center" }}>Remove</th>
+          </tr>
+        </thead>
+        <tbody>
+          {dogList.map((val, key) => {
+            return (
+              <tr>
+                <td>{val.name}</td>
+                <td>{val.feedingUser}</td>
+                <td>{val.feedingDate}</td>
+                <td>{val.walkUser}</td>
+                <td>{val.walkDate}</td>
+                <td>
+                  <button
+                    onClick={() => {
+                      removeDog(val.dogsID);
+                    }}
+                  >
+                    remove
+                  </button>
+                </td>
+              </tr>
+            );
+          })}
+        </tbody>
+      </table>
+
+      
     </div>
   );
 }

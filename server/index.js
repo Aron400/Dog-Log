@@ -101,6 +101,11 @@ app.post("/login", (req, res) => {
 	});
 });
 
+app.get("/logout", (req, res) => {
+	req.session.destroy();
+	res.redirect("/login");
+});
+
 app.post("/addDog", (req, res) => {
 	const name = req.body.name;
 	console.log(req.session.user);
@@ -294,21 +299,27 @@ app.delete("/deleteUser/:id", (req, res) => {
 // });
 
 app.get("/getVaccine", (req, res) => {
-	const sqlGet = "SELECT* FROM vaccineList";
+	const userID = req.session.user.id;
+	const sqlGet = `SELECT* FROM vaccineList WHERE userloginID = ${userID}`;
 	db.query(sqlGet, (error, result) => {
 		res.send(result);
 	});
 });
 
 app.post("/newVaccine", (req, res) => {
+	const userId = req.session.user.id;
 	const { name, givenDate, expireDate } = req.body;
 	const sqlInsert =
-		"INSERT INTO vaccineList(name,givenDate,expireDate) VALUES (?,?,?)";
-	db.query(sqlInsert, [name, givenDate, expireDate], (error, result) => {
-		if (error) {
-			console.log(error);
+		"INSERT INTO vaccineList(name,givenDate,expireDate, userloginID) VALUES (?,?,?,?)";
+	db.query(
+		sqlInsert,
+		[name, givenDate, expireDate, userId],
+		(error, result) => {
+			if (error) {
+				console.log(error);
+			}
 		}
-	});
+	);
 });
 
 app.delete("/removeVaccine/:id", (req, res) => {
@@ -359,7 +370,8 @@ app.delete("/deleteDog/:id", (req, res) => {
 
 //notes
 app.get("/getNotes", (req, res) => {
-	const sqlGet = "SELECT* FROM notes";
+	const userID = req.session.user.id;
+	const sqlGet = `SELECT* FROM notes WHERE userloginID = ${userID}`;
 	db.query(sqlGet, (error, result) => {
 		res.send(result);
 	});
@@ -367,8 +379,9 @@ app.get("/getNotes", (req, res) => {
 
 app.post("/newNote", (req, res) => {
 	const { name } = req.body;
-	const sqlInsert = "INSERT INTO notes (name) VALUES (?)";
-	db.query(sqlInsert, [name], (error, result) => {
+	const userId = req.session.user.id;
+	const sqlInsert = "INSERT INTO notes (name, userloginID) VALUES (?, ?)";
+	db.query(sqlInsert, [name, userId], (error, result) => {
 		if (error) {
 			console.log(error);
 		}

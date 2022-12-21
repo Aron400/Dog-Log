@@ -1,4 +1,4 @@
-.login,
+/* .login,
 .home,
 .walks,
 .feeding,
@@ -13,16 +13,56 @@
   border: 1px solid #7a8796;
   padding: 10px;
   box-shadow: rgba(0, 0, 0, 0.56) 0px 22px 70px 4px;
+} */
+
+.dogs,
+.addDogUser,
+.users {
+  border-collapse: collapse;
+  margin: auto;
+  font-size: 0.9em;
+  font-family: sans-serif;
+  width: 85%;
+  background-color: white;
+  border-radius: 10px;
+  border: 1px solid #7a8796;
+  box-shadow: rgba(0, 0, 0, 0.56) 0px 22px 70px 4px;
 }
-label,
-select,
-button {
-  margin: 5px;
-  width: auto;
+
+/* .addButton {
+  width: 400px;
+  padding-top: 2px;
+} */
+
+.dogs {
+  background-color: #f8e6de;
+  border: 1px solid black;
+  text-align: center;
 }
-.walk-card,
-.feed-card {
-  text-align: left;
+
+td,
+th {
+  padding: 12px 15px;
+
+}
+
+
+.add {
+  display: flex;
+  text-align: center;
+  min-width: 90px;
+}
+
+.white {
+  background-color: white;
+}
+.dogData {
+  margin: 10px;
+
+}
+
+.inputPadding {
+  padding: 10px;
 }
 
 .users {
@@ -32,7 +72,7 @@ button {
 .user-card {
   display: flex;
   align-items: center;
-  width: 150px
+  width: 150px;
 }
 
 form {
@@ -60,6 +100,9 @@ button {
   color: white;
   padding: 5px;
 }
+button:hover {
+  background-color: #c97757;
+}
 
 h3 {
   flex-direction: column;
@@ -82,24 +125,22 @@ li {
 }
 
 @media (max-width: 500px) {
-
-.login,
-.home,
-.walks,
-.feeding,
-.information {
-  flex-direction: column;
-  width: 280px;
-  margin-top: 50px;
-  margin-left: auto;
-  margin-right: auto;
-  background: white;
-  border-radius: 10px;
-  border: 1px solid #7a8796;
-  padding: 10px;
-  box-shadow: rgba(0, 0, 0, 0.56) 0px 22px 70px 4px;
-}
-
+  .login,
+  .home,
+  .walks,
+  .feeding,
+  .information {
+    flex-direction: column;
+    width: 280px;
+    margin-top: 50px;
+    margin-left: auto;
+    margin-right: auto;
+    background: white;
+    border-radius: 10px;
+    border: 1px solid #7a8796;
+    padding: 10px;
+    box-shadow: rgba(0, 0, 0, 0.56) 0px 22px 70px 4px;
+  }
 
   img {
     width: 150px;
