@@ -88,7 +88,7 @@ function Walks() {
       </table>
       <table className="styled-table">
           <div className="field">
-            <label>Select Dog:</label>
+          <label><h3>Select Dog:</h3></label>
             <select
               name="dog"
               onChange={(e) => {
@@ -100,7 +100,7 @@ function Walks() {
               ))}
             </select>
             <br />
-            <label>Select User:</label>
+            <label><h3>Select User:</h3></label>
             <select
               name="user"
               onChange={(e) => {

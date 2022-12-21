@@ -286,7 +286,7 @@ app.get("/getVaccine", (req, res) => {
 app.post("/newVaccine", (req, res) => {
   const { name, givenDate, expireDate } = req.body;
   const sqlInsert =
-    "INSERT INTO vaccineList(name,givenDate,expireDate) VALUES (?,?,?)";
+    "INSERT INTO vaccinelist(name,givenDate,expireDate) VALUES (?,?,?)";
   db.query(sqlInsert, [name, givenDate, expireDate], (error, result) => {
     if (error) {
       console.log(error);
@@ -296,7 +296,7 @@ app.post("/newVaccine", (req, res) => {
 
 app.delete("/removeVaccine/:id", (req, res) => {
   const { id } = req.params;
-  const sqlRemove = "DELETE FROM vaccineList WHERE id = ?";
+  const sqlRemove = "DELETE FROM vaccinelist WHERE id = ?";
   db.query(sqlRemove, id, (error, result) => {
     if (error) {
       console.log(error);
@@ -306,7 +306,7 @@ app.delete("/removeVaccine/:id", (req, res) => {
 
 app.get("/getVaccine/:id", (req, res) => {
   const { id } = req.params;
-  const sqlGet = "SELECT* FROM vaccineList WHERE id =?";
+  const sqlGet = "SELECT* FROM vaccinelist WHERE id =?";
   db.query(sqlGet, id, (error, result) => {
     if (error) {
       console.log(error);
@@ -319,7 +319,7 @@ app.post("/updateVaccine/:id", (req, res) => {
   const { id } = req.params;
   const { name, givenDate, expireDate } = req.body;
   const sqlUpdate =
-    "UPDATE vaccineList SET name=?, givenDate=?, expireDate=? WHERE id=?";
+    "UPDATE vaccinelist SET name=?, givenDate=?, expireDate=? WHERE id=?";
   db.query(sqlUpdate, [name, givenDate, expireDate, id], (error, result) => {
     if (error) {
       console.log(error);
