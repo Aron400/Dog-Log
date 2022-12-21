@@ -46,8 +46,19 @@ th {
 
 }
 
+
+.add {
+  display: flex;
+  text-align: center;
+  min-width: 90px;
+}
+
+.white {
+  background-color: white;
+
 .dogData {
   margin: 10px;
+
 }
 
 .inputPadding {

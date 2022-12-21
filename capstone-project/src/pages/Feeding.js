@@ -128,7 +128,7 @@ function Feeding() {
                   <th style={{ textAlign: "center" }}>Feeding Date</th>{" "}
                 </tr>
             </thead>
-            <tbody>
+            <tbody className="white">
             {feedList.map((val, key) => {
               return (
                   <tr>

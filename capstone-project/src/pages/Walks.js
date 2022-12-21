@@ -129,7 +129,7 @@ function Walks() {
                   <th style={{ textAlign: "center" }}>Walk Date</th>{" "}
                 </tr>
             </thead>
-            <tbody>
+            <tbody className="white">
             {walkList.map((val, key) => {
               return (
                   <tr>
