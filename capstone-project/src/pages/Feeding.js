@@ -3,7 +3,7 @@ import Axios from "axios";
 import { v4 as uuid } from "uuid";
 import AddFeeding from "../components/AddFeeding";
 import FeedingHistory from "../components/FeedingHistory";
-import "./pages.css";
+// import "./pages.css";
 
 function Feeding() {
   const [feeding, setFeeding] = useState('');
@@ -21,11 +21,14 @@ function Feeding() {
     Axios.get("http://localhost:3001/users").then((res) => {
       const users = res.data;
       setUserList(users);
+      setUser(users[0].name)
     });
     Axios.get("http://localhost:3001/dogs").then((res) => {
       const dogs = res.data;
       setDogList(dogs);
+      setDog(dogs[0].name)
     });
+    history();
   }
 
   const addFeeding = (e) => {
@@ -37,24 +40,7 @@ function Feeding() {
         let dateUnform = new Date();
         let displayDate = dateUnform.toLocaleString();
         console.log(displayDate)
-        setDate(displayDate.toString())
-            console.log(date)
-            Axios.post(
-              "http://localhost:3001/feeding",
-              {
-                dog: dog,
-                user: user,
-                date: date
-              },
-              console.log("hi")
-            )
-            .then((res) => {
-                console.log("Server response: ", res);
-            })
-            .catch((err) => {
-                console.log("Server respondend with error: ", err);
-            })
-            
+        setDate(displayDate.toString())      
   };
 
   const history = () => {
@@ -67,23 +53,47 @@ function Feeding() {
     })
   }
   console.log(feedList);
+
   useEffect(() => {
     componentDidMount();
-    history();
+  }, []);
+
+  useEffect(() => {
+    if (date) {
+      Axios.post(
+        "http://localhost:3001/feeding",
+        {
+          dog: dog,
+          user: user,
+          date: date
+        },
+      )
+      .then((res) => {
+          console.log("Server response: ", res);
+      }).then(() => {
+        history();
+      })
+      .catch((err) => {
+          console.log("Server respondend with error: ", err);
+      })
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   },[date]);
 
   return (
-    <>
+    <div>
       <h1>Feeding</h1>
-      <div className="feeding">
-        <form className="feeding-form">
-          <h2>Add Feeding</h2>
+    <div style={{ marginTop: "50px"}}>
+      <table className="styled-table">
+        <tr className="vaccineTitle" style={{ textAlign: "center" }}>
+          Add Feeding
+        </tr>
+      </table>
+      <table className="styled-table">
           <div className="field">
-            <label>Dog:</label>
+            <label>Select Dog:</label>
             <select
               name="dog"
-              
               onChange={(e) => {
                 setDog(e.target.value)
               }}
@@ -93,10 +103,9 @@ function Feeding() {
               ))}
             </select>
             <br />
-            <label>User:</label>
+            <label>Select User:</label>
             <select
               name="user"
-              
               onChange={(e) => {
                 setUser(e.target.value)
               }}
@@ -108,23 +117,38 @@ function Feeding() {
             <br />
             <button onClick={addFeeding}>Add Feeding</button>
           </div>
-          <div className="history">
-            <form>
-            <h2>Feeding History</h2>
+          </table>
+          <div style={{ marginTop: "50px" }} className="history">
+          <table className="styled-table">
+        <tr className="vaccineTitle" style={{ textAlign: "center" }}>
+          Feeding History
+        </tr>
+      </table>
+          <table className="styled-table">
+            <thead>
+                <tr className="vaccineHeader">
+                  <th style={{ textAlign: "center" }}>Dog Name</th>{" "}
+                  <th style={{ textAlign: "center" }}>User Name</th>{" "}
+                  <th style={{ textAlign: "center" }}>Feeding Date</th>{" "}
+                </tr>
+            </thead>
+            <tbody>
             {feedList.map((val, key) => {
-              return <div className="feed-card">
-                <ul>
-                  <li><b>Dog:</b> {val.dog} <b>User:</b> {val.feedingUser} <b>Date:</b> {val.feedingDate}</li>
-                </ul>
-                
+              return (
+                  <tr>
+                    <td style={{ textAlign: "center" }}>{val.dog}</td>
+                  <td style={{ textAlign: "center" }}>{val.feedingUser}</td>
+                  <td style={{ textAlign: "center" }}>{val.feedingDate}</td>
+                  </tr>
+          )
+          })}
+          </tbody>
+            </table>
           </div>
-            
-        })}
-            </form>
-          </div>
-        </form>
-      </div>
-    </>
+        
+      
+    </div>
+    </div>
   );
 }
 
