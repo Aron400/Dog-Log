@@ -154,7 +154,7 @@ function Home() {
                       removeDog(val.dogsID);
                     }}
                   >
-                    remove
+                    Remove
                   </button>
                 </td>
               </tr>
@@ -189,7 +189,7 @@ function Home() {
                           removeUser(val.usersID);
                         }}
                       >
-                        remove
+                        Remove
                       </button>
                     </td>
                   </tr>
