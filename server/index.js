@@ -101,11 +101,6 @@ app.post("/login", (req, res) => {
 	});
 });
 
-app.get("/logout", (req, res) => {
-	req.session.destroy();
-	res.redirect("/login");
-});
-
 app.post("/addDog", (req, res) => {
 	const name = req.body.name;
 	console.log(req.session.user);
