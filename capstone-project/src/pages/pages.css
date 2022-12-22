@@ -1,19 +1,27 @@
-/* .login,
-.home,
-.walks,
-.feeding,
-.information {
-  flex-direction: column;
-  width: 650px;
-  margin-top: 50px;
-  margin-left: auto;
-  margin-right: auto;
-  background: white;
-  border-radius: 10px;
-  border: 1px solid #7a8796;
-  padding: 10px;
-  box-shadow: rgba(0, 0, 0, 0.56) 0px 22px 70px 4px;
-} */
+.loginInput,
+.registerInput {
+  padding: 12px 20px;
+  margin: 8px 8;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+  text-align: center;
+}
+
+.registerInput {
+  width: 400px;
+}
+
+.loginButton {
+  background-color: #2b3e52;
+  color: #ccc;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
 
 .dogs,
 .addDogUser,
@@ -29,11 +37,6 @@
   box-shadow: rgba(0, 0, 0, 0.56) 0px 22px 70px 4px;
 }
 
-/* .addButton {
-  width: 400px;
-  padding-top: 2px;
-} */
-
 .dogs {
   background-color: #f8e6de;
   border: 1px solid black;
@@ -43,9 +46,7 @@
 td,
 th {
   padding: 12px 15px;
-
 }
-
 
 .add {
   display: flex;
@@ -58,7 +59,6 @@ th {
 }
 .dogData {
   margin: 10px;
-
 }
 
 .inputPadding {
@@ -140,9 +140,5 @@ li {
     border: 1px solid #7a8796;
     padding: 10px;
     box-shadow: rgba(0, 0, 0, 0.56) 0px 22px 70px 4px;
-  }
-
-  img {
-    width: 150px;
   }
 }

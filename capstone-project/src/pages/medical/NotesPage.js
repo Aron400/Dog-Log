@@ -50,17 +50,16 @@ const NotesPage = () => {
                   >
                     Delete
                   </button>
-                  {/* <Link to={`/view/${item.id}`}>
-                    <button className="btn btn-view">View</button>
-                  </Link> */}
                 </td>
               </tr>
             );
           })}
         </tbody>
-        <Link to="/addNote">
-          <button className="btn btn-notes">Add a Note</button>
-        </Link>
+        <tr style={{ textAlign: "center" }}>
+          <Link to="/addNote">
+            <button className="btn btn-notes">Add a Note</button>
+          </Link>
+        </tr>
       </table>
     </div>
   );

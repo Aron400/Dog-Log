@@ -57,17 +57,18 @@ const VaccinePage = () => {
                   >
                     Delete
                   </button>
-                  {/* <Link to={`/view/${item.id}`}>
-                    <button className="btn btn-view">View</button>
-                  </Link> */}
                 </td>
               </tr>
             );
           })}
         </tbody>
-        <Link to="/addVaccine">
-          <button className="btn btn-vaccine">Add a Vaccine</button>
-        </Link>
+      </table>
+      <table className="styled-table">
+        <tr style={{ textAlign: "center" }}>
+          <Link to="/addVaccine">
+            <button className="addVaccineBtn">Add a Vaccine</button>
+          </Link>{" "}
+        </tr>
       </table>
     </div>
   );

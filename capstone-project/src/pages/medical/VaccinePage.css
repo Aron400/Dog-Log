@@ -4,6 +4,7 @@
   font-size: 0.9em;
   font-family: sans-serif;
   width: 85%;
+  background-color: white;
   box-shadow: rgba(0, 0, 0, 0.56) 0px 22px 70px 4px;
 }
 .vaccineHeader {
@@ -31,3 +32,6 @@
   border: 1px solid #2b3e52;
 }
 
+.addVaccineBtn {
+  margin: 10px;
+}
