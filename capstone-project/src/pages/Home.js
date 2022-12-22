@@ -65,24 +65,33 @@ function Home() {
         console.log("Server respondend with error: ", err);
       });
   };
+  
   useEffect(() => {
     getUsers();
     getDogs();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [dog, user]);
+  }, [dog, user, dogList, userList]);
   const removeUser = (id) => {
+// true false and run useEffect
     Axios.delete(`http://localhost:3001/deleteUser/${id}`);
+
   };
   const removeDog = (id) => {
     Axios.delete(`http://localhost:3001/deleteDog/${id}`);
   };
-
+  
   return (
     <div>
       <h1>Home</h1>
-      <div style={{ marginTop: "50px" }}>
+      <table className="styled-table" style={{ marginTop: "50px" }}>
+            <tr className="vaccineTitle" style={{ textAlign: "center" }}>
+              Add
+            </tr>
+           </table>
+      <table className="styled-table" ></table>
+      <div>
         <div className="addDogUser">
-          <h3>Add Dog</h3>
+          <h3 style={{ paddingTop: "8px" }}>Add Dog</h3>
           <div className="inputPadding">
             <input
               type="text"
@@ -96,7 +105,7 @@ function Home() {
             />
             <button className="addButton" onClick={addDog}>
               Add
-            </button>{" "}
+            </button>
           </div>
 
           <h3>Add User</h3>
@@ -111,15 +120,20 @@ function Home() {
               }}
               value={user}
             />
-          </div>
           <button className="addButton" onClick={addUser}>
             Add
           </button>
+          </div>
         </div>
       </div>
-      <table className="dogs" style={{ marginTop: "50px" }}>
+      <table className="styled-table" style={{ marginTop: "50px" }}>
+            <tr className="vaccineTitle" style={{ textAlign: "center" }}>
+              Dogs Information
+            </tr>
+           </table>
+      <table className="styled-table" >
         <thead>
-          <tr>
+          <tr className="vaccineHeader">
             <th style={{ textAlign: "center" }}>Name</th>
             <th style={{ textAlign: "center" }}>Last Feeding User</th>
             <th style={{ textAlign: "center" }}>Last Feeding Date</th>
@@ -128,22 +142,22 @@ function Home() {
             <th style={{ textAlign: "center" }}>Remove</th>
           </tr>
         </thead>
-        <tbody>
+        <tbody className="white">
           {dogList.map((val, key) => {
             return (
-              <tr>
-                <td>{val.name}</td>
-                <td>{val.feedingUser}</td>
-                <td>{val.feedingDate}</td>
-                <td>{val.walkUser}</td>
-                <td>{val.walkDate}</td>
-                <td>
+              <tr >
+                <td style={{ textAlign: "center" }}>{val.name}</td>
+                <td style={{ textAlign: "center" }}>{val.feedingUser}</td>
+                <td style={{ textAlign: "center" }}>{val.feedingDate}</td>
+                <td style={{ textAlign: "center" }}>{val.walkUser}</td>
+                <td style={{ textAlign: "center" }}>{val.walkDate}</td>
+                <td style={{ textAlign: "center" }}>
                   <button
                     onClick={() => {
                       removeDog(val.dogsID);
                     }}
                   >
-                    remove
+                    Remove
                   </button>
                 </td>
               </tr>
@@ -152,7 +166,42 @@ function Home() {
         </tbody>
       </table>
 
-      
+      <div >
+        <div>
+          
+        <table className="styled-table" style={{ marginTop: "50px" }}>
+            <tr className="vaccineTitle" style={{ textAlign: "center" }}>
+              Users Information
+            </tr>
+           </table>
+           <table className="styled-table" >
+            <thead>
+              <tr className="vaccineHeader">
+                <th style={{ textAlign: "center" }}>Name</th>
+                <th style={{ textAlign: "center" }}>Remove</th>
+              </tr>
+            </thead>
+            <tbody className="white">
+              {userList.map((val, key) => {
+                return (
+                  <tr>
+                    <td style={{ textAlign: "center" }}>{val.name}</td>
+                    <td style={{ textAlign: "center" }}>
+                      <button
+                        onClick={() => {
+                          removeUser(val.usersID);
+                        }}
+                      >
+                        Remove
+                      </button>
+                    </td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        </div>
+      </div>
     </div>
   );
 }

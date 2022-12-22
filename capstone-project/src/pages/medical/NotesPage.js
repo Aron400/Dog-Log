@@ -30,22 +30,24 @@ const NotesPage = () => {
           Notes
         </tr>
       </table>
-      <table className="notes">
+      <table className="styled-table">
         <tbody>
           {data.map((item, index) => {
             return (
-              <tr key={item.id}>
+              <tr key={item.id} className="vaccineTable">
                 <div className="noteItemPadding">
                   <div className="noteItem">
-                    <td className="noteText">{item.name}</td>
+                    <td style={{ textAlign: "center" }} className="noteText">{item.name}</td>
                   </div>
                 </div>
                 <td className="notesButtons">
                   <Link to={`/updateNote/${item.id}`}>
-                    <button className="btn btn-edit">Edit</button>
+                    
+                      <button className="btn btn-edit">Edit</button>
+                    
                   </Link>
                   <button
-                    className="btn btn-delete"
+                    className="addButton"
                     onClick={() => deleteNote(item.id)}
                   >
                     Delete
@@ -55,11 +57,12 @@ const NotesPage = () => {
             );
           })}
         </tbody>
-        <tr style={{ textAlign: "center" }}>
-          <Link to="/addNote">
-            <button className="btn btn-notes">Add a Note</button>
-          </Link>
-        </tr>
+        <div className="inputPadding">
+        <Link to="/addNote">
+          <button className="addButton">Add a Note</button>
+        </Link>
+          </div>
+
       </table>
     </div>
   );

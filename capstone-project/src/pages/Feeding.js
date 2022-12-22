@@ -9,8 +9,8 @@ function Feeding() {
   const [date, setDate] = useState('');
   const [dogList, setDogList] = useState([]);
   const [userList, setUserList] = useState([]);
-  const [usersID, setUsersID] = useState('');
-  const [dogsID, setDogsID] = useState('');
+  const [usersID, setUsersID] = useState('1');
+  const [dogsID, setDogsID] = useState('1');
 
   const componentDidMount = () => {
     console.log('testing')
@@ -60,7 +60,9 @@ function Feeding() {
         "http://localhost:3001/feeding",
         {
           dog: dog,
+          dogsID: dogsID,
           user: user,
+          usersID: usersID,
           date: date
         },
       )
@@ -87,31 +89,46 @@ function Feeding() {
       </table>
       <table className="styled-table">
           <div className="field">
-            <label>Select Dog:</label>
+            <label><h3>Select Dog:</h3></label>
             <select
               name="dog"
               onChange={(e) => {
-                setDog(e.target.value)
+                const {  options, selectedIndex } = e.target;
+                const text = options[selectedIndex].text;
+
+                setDog(text)
+                setDogsID(e.target.value)
               }}
             >
-              {dogList.map((val, key) => (
-                <option>{val.name}</option>
+              {dogList.map((val, key) => 
+              (
+                <option 
+                value={val.dogsID}
+                >{val.name}</option>
               ))}
             </select>
             <br />
-            <label>Select User:</label>
+            <label><h3>Select User:</h3></label>
             <select
               name="user"
               onChange={(e) => {
-                setUser(e.target.value)
+                const {  options, selectedIndex } = e.target;
+                const text = options[selectedIndex].text;
+
+                setUser(text)
+                setUsersID(e.target.value)
               }}
             >
               {userList.map((val, key) => (
-                <option>{val.name}</option>
+                <option
+                value={val.usersID}
+                >{val.name}</option>
               ))}
             </select>
             <br />
-            <button className="add" onClick={addFeeding}>Add Feeding</button>
+            <div className="inputPadding">
+              <button className="addButton" onClick={addFeeding}>Add Feeding</button>
+            </div>
           </div>
           </table>
           <div style={{ marginTop: "50px" }} className="history">

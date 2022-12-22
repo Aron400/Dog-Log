@@ -37,6 +37,10 @@
   box-shadow: rgba(0, 0, 0, 0.56) 0px 22px 70px 4px;
 }
 
+.addButton {
+  margin-top: 5px;
+}
+
 .dogs {
   background-color: #f8e6de;
   border: 1px solid black;
@@ -63,6 +67,7 @@ th {
 
 .inputPadding {
   padding: 10px;
+  text-align: center;
 }
 
 .users {
