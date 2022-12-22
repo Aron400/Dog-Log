@@ -61,7 +61,9 @@ function Walks() {
         "http://localhost:3001/walks",
         {
           dog: dog,
+          dogsID: dogsID,
           user: user,
+          usersID: usersID,
           date: date
         },
       )
@@ -92,11 +94,17 @@ function Walks() {
             <select
               name="dog"
               onChange={(e) => {
-                setDog(e.target.value)
+                const {  options, selectedIndex } = e.target;
+                const text = options[selectedIndex].text;
+
+                setDog(text)
+                setDogsID(e.target.value)
               }}
             >
               {dogList.map((val, key) => (
-                <option>{val.name}</option>
+                <option
+                value={val.dogsID}
+                >{val.name}</option>
               ))}
             </select>
             <br />
@@ -104,11 +112,17 @@ function Walks() {
             <select
               name="user"
               onChange={(e) => {
-                setUser(e.target.value)
+                const {  options, selectedIndex } = e.target;
+                const text = options[selectedIndex].text;
+
+                setUser(text)
+                setUsersID(e.target.value)
               }}
             >
               {userList.map((val, key) => (
-                <option>{val.name}</option>
+                <option
+                value={val.usersID}
+                >{val.name}</option>
               ))}
             </select>
             <br />

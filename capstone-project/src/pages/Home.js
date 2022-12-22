@@ -65,18 +65,21 @@ function Home() {
         console.log("Server respondend with error: ", err);
       });
   };
+  
   useEffect(() => {
     getUsers();
     getDogs();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [dog, user]);
+  }, [dog, user, dogList, userList]);
   const removeUser = (id) => {
+// true false and run useEffect
     Axios.delete(`http://localhost:3001/deleteUser/${id}`);
+
   };
   const removeDog = (id) => {
     Axios.delete(`http://localhost:3001/deleteDog/${id}`);
   };
-
+  
   return (
     <div>
       <h1>Home</h1>

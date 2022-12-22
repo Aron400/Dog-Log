@@ -93,26 +93,36 @@ function Feeding() {
             <select
               name="dog"
               onChange={(e) => {
-                setDog(e.target.value)
+                const {  options, selectedIndex } = e.target;
+                const text = options[selectedIndex].text;
+
+                setDog(text)
                 setDogsID(e.target.value)
               }}
             >
               {dogList.map((val, key) => 
               (
-                <option>{val.name} {val.dogsID}</option>
+                <option 
+                value={val.dogsID}
+                >{val.name}</option>
               ))}
             </select>
             <br />
             <label><h3>Select User:</h3></label>
             <select
-              
               name="user"
               onChange={(e) => {
-                setUser(e.target.value)
+                const {  options, selectedIndex } = e.target;
+                const text = options[selectedIndex].text;
+
+                setUser(text)
+                setUsersID(e.target.value)
               }}
             >
               {userList.map((val, key) => (
-                <option>{val.name}</option>
+                <option
+                value={val.usersID}
+                >{val.name}</option>
               ))}
             </select>
             <br />
