@@ -52,9 +52,6 @@ const NotesPage = () => {
                   >
                     Delete
                   </button>
-                  {/* <Link to={`/view/${item.id}`}>
-                    <button className="btn btn-view">View</button>
-                  </Link> */}
                 </td>
               </tr>
             );
@@ -65,6 +62,7 @@ const NotesPage = () => {
           <button className="addButton">Add a Note</button>
         </Link>
           </div>
+
       </table>
     </div>
   );
