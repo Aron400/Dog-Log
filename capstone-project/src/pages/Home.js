@@ -26,6 +26,7 @@ function Home() {
       });
     setDog("");
   };
+
   const addUser = (e) => {
     e.preventDefault();
     if (user === "") {
@@ -44,6 +45,7 @@ function Home() {
       });
     setUser("");
   };
+
   const getDogs = () => {
     Axios.get("http://localhost:3001/dogs")
       .then((res) => {
@@ -55,6 +57,7 @@ function Home() {
         console.log("Server respondend with error: ", err);
       });
   };
+
   const getUsers = () => {
     Axios.get("http://localhost:3001/users")
       .then((res) => {
@@ -71,11 +74,12 @@ function Home() {
     getDogs();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dog, user, dogList, userList]);
+
   const removeUser = (id) => {
 // true false and run useEffect
     Axios.delete(`http://localhost:3001/deleteUser/${id}`);
-
   };
+  
   const removeDog = (id) => {
     Axios.delete(`http://localhost:3001/deleteDog/${id}`);
   };

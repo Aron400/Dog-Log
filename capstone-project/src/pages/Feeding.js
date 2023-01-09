@@ -15,7 +15,9 @@ function Feeding() {
   const componentDidMount = () => {
     console.log('testing')
     Axios.get("http://localhost:3001/users").then((res) => {
+      console.log("Server response: ", res);  
       const users = res.data;
+     
       setUserList(users);
       setUser(users[0].name)
     });

@@ -43,8 +43,8 @@ app.use(express.json());
 const db = mysql.createConnection({
 	user: "root",
 	host: "localhost",
-	password: "12345",
-	database: "dogApp",
+	password: "root1",
+	database: "doglog",
 });
 
 app.post("/create", (req, res) => {
@@ -123,7 +123,7 @@ app.post("/addDog", (req, res) => {
 	);
 });
 app.get("/dogs", (req, res) => {
-	const userID = req.session.user.id;
+	const userId = req.session.user.id;
 	db.query(
 		`SELECT d.dogsID, d.name, 
 			(SELECT feedingUser from feedings as f WHERE f.dogsID = d.dogsID ORDER BY feedingDate DESC LIMIT 1) as feedingUser,
@@ -131,7 +131,7 @@ app.get("/dogs", (req, res) => {
 			(SELECT walkUser from walks as w WHERE w.dogsID = d.dogsID ORDER BY walkDate DESC LIMIT 1) as walkUser,
 			(SELECT walkDate from walks as w WHERE w.dogsID = d.dogsID ORDER BY walkDate DESC LIMIT 1) as walkDate
 			FROM dogs as d
-			WHERE d.userloginID = ${userID}`,
+			WHERE d.userloginID = ${userId}`,
 		(err, result) => {
 			if (err) {
 				console.log(err);
@@ -159,10 +159,10 @@ app.post("/addUser", (req, res) => {
 	);
 });
 app.get("/users", (req, res) => {
-	const userID = req.session.user.id;
-
+	const userId = req.session.user.id;
+	console.log(req.session.user)
 	db.query(
-		`SELECT * FROM users WHERE userloginID = ${userID}`,
+		`SELECT * FROM users WHERE userloginID = ${userId}`,
 		(err, result) => {
 			if (err) {
 				console.log(err);
@@ -174,15 +174,13 @@ app.get("/users", (req, res) => {
 });
 
 app.post("/feeding", (req, res) => {
-	const dog = req.body.dog;
-	const dogsID = req.body.dogsID;
-	const user = req.body.user;
-	const usersID = req.body.usersID;
-	const date = req.body.date;
-
+	const userId = req.session.user.id;
+	const { dog, dogsID, user, usersID, date} = req.body;
+	const sqlInsert =
+	"INSERT INTO feedings (dog, dogsID, feedingUser, usersID, feedingDate, userloginID) VALUES (?,?,?,?,?,?)";
 	db.query(
-		"INSERT INTO feedings (dog, dogsID, feedingUser, usersID, feedingDate) VALUES (?,?,?,?,?)",
-		[dog, dogsID, user, usersID, date],
+		sqlInsert,
+		[dog, dogsID, user, usersID, date, userId],
 		(err, result) => {
 			if (err) {
 				console.log(err);
@@ -194,11 +192,13 @@ app.post("/feeding", (req, res) => {
 });
 
 app.get("/feedingHistory", (req, res) => {
-	db.query(
-		`SELECT dog, feedingUser, feedingDate 
+	const userID = req.session.user.id;
+	const sqlGet = `SELECT dog, feedingUser, feedingDate 
 		FROM feedings
+		WHERE userloginID = ${userID}
 		ORDER BY feedingsID DESC
-		LIMIT 10`,
+		LIMIT 10`
+	db.query(sqlGet,
 		(err, result) => {
 			if (err) {
 				console.log(err);
@@ -208,17 +208,14 @@ app.get("/feedingHistory", (req, res) => {
 		}
 	);
 });
-
 app.post("/walks", (req, res) => {
-	const dog = req.body.dog;
-	const dogsID = req.body.dogsID;
-	const user = req.body.user;
-	const usersID = req.body.usersID;
-	const date = req.body.date;
-
+	const userId = req.session.user.id;
+	const { dog, dogsID, user, usersID, date} = req.body;
+	const sqlInsert =
+	"INSERT INTO walks (dog, dogsID, walkUser, usersID, walkDate, userloginID) VALUES (?,?,?,?,?,?)";
 	db.query(
-		"INSERT INTO walks (dog, dogsID, walkUser, usersID, walkDate) VALUES (?,?,?,?,?)",
-		[dog, dogsID, user, usersID, date],
+		sqlInsert,
+		[dog, dogsID, user, usersID, date, userId],
 		(err, result) => {
 			if (err) {
 				console.log(err);
@@ -230,25 +227,13 @@ app.post("/walks", (req, res) => {
 });
 
 app.get("/walkHistory", (req, res) => {
-	db.query(
-		`SELECT dog, walkUser, walkDate 
+	const userID = req.session.user.id;
+	const sqlGet = `SELECT dog, walkUser, walkDate 
 		FROM walks
+		WHERE userloginID = ${userID}
 		ORDER BY walksID DESC
-		LIMIT 10`,
-		(err, result) => {
-			if (err) {
-				console.log(err);
-			} else {
-				res.send(result);
-			}
-		}
-	);
-});
-
-app.post("/lastFeeding", (req, res) => {
-	db.query(
-		"SELECT * FROM feedings",
-
+		LIMIT 10`
+	db.query(sqlGet,
 		(err, result) => {
 			if (err) {
 				console.log(err);
